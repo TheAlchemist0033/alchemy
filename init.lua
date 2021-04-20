@@ -241,6 +241,9 @@ minetest.register_craftitem(
             end
         }
 )
+minetest.register_on_leaveplayer(function(player)
+	alchemy.players[player:get_player_name()] = nil
+end)
 --todo:
 --waterbreathing done
 --speed done
