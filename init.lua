@@ -31,7 +31,7 @@ minetest.register_craftitem(
                             breath_max = 1000
                         }
                 )
-                plater:set_breath(1000)
+                player:set_breath(1000)
                 minetest.after(
                         60,
                         function()
