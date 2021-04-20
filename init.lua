@@ -25,7 +25,7 @@ minetest.register_craftitem(
             on_use = function(itemstack, player, pointed_thing)
                 breathIsActive = 1
                 firstrun = 0
-                minetest.item_eat(0, "alchemy:breath_potion")
+                minetest.item_eat(1, "alchemy:breath_potion")
                 player:set_properties(
                         {
                             breath_max = 1000
@@ -54,7 +54,7 @@ minetest.register_craftitem(
             description = "Fortitude Potion I",
             inventory_image = "alchemy_base_potion.png^[colorize:#940000:100",
             on_use = function(itemstack, player, pointed_thing)
-                minetest.item_eat(0, "alchemy:fortitude_potion")
+                minetest.item_eat(1, "alchemy:fortitude_potion")
                 player:set_properties(
                         {
                             hp_max = minetest.PLAYER_MAX_HP_DEFAULT * 2
@@ -83,7 +83,7 @@ minetest.register_craftitem(
             description = "invisibility potion I",
             inventory_image = "alchemy_base_potion.png^[colorize:#708F9F:100",
             on_use = function(itemstack, player, pointed_thing)
-                minetest.item_eat(0, "alchemy:invisibility_potion")
+                minetest.item_eat(1, "alchemy:invisibility_potion")
                 prop =
                 player:set_properties(
                         {
@@ -127,7 +127,7 @@ minetest.register_craftitem(
             description = "slow healing potion I",
             inventory_image = "alchemy_base_potion.png^[colorize:#C91060:100",
             on_use= function(itemstack, player, pointed_thing)
-                minetest.item_eat(0, "alchemy:slow_healing_potion")
+                minetest.item_eat(1, "alchemy:slow_healing_potion")
                 slowheal = {player:get_player_name(),1}
                 print(slowheal)
                 minetest.after(
@@ -153,7 +153,7 @@ minetest.register_craftitem(
             on_use = function(itemstack, player, pointed_thing)
                 breathIsActive = 1
                 firstrun = 0
-                minetest.item_eat(0, "alchemy:leaping_potion")
+                minetest.item_eat(1, "alchemy:leaping_potion")
                 player:set_physics_override({jump=2})
                 minetest.after(
                         60,
@@ -178,7 +178,7 @@ minetest.register_craftitem(
             on_use = function(itemstack, player, pointed_thing)
                 breathIsActive = 1
                 firstrun = 0
-                minetest.item_eat(0, "alchemy:lunar_potion")
+                minetest.item_eat(1, "alchemy:lunar_potion")
                 player:set_physics_override({gravity=0.5})
                 minetest.after(
                         60,
@@ -203,7 +203,7 @@ minetest.register_craftitem(
             on_use = function(itemstack, player, pointed_thing)
                 breathIsActive = 1
                 firstrun = 0
-                minetest.item_eat(0, "alchemy:lunar_potion")
+                minetest.item_eat(1, "alchemy:lunar_potion")
                 player:set_physics_override({speed=2})
                 minetest.after(
                         60,
