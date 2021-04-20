@@ -59,7 +59,7 @@ minetest.register_craftitem(
                             hp_max = minetest.PLAYER_MAX_HP_DEFAULT * 2
                         }
                 )
-                player:set_hp(PLAYER_MAX_HP_DEFAULT * 2)
+                player:set_hp(minetest.PLAYER_MAX_HP_DEFAULT * 2)
                 minetest.after(
                         60,
                         function()
