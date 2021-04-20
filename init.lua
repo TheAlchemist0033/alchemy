@@ -194,13 +194,38 @@ minetest.register_craftitem(
             end
         }
 )
+minetest.register_craftitem(
+        "alchemy:speed_potion",
+        {
+            description = "Speed Potion I",
+            inventory_image = "alchemy_base_potion.png^[colorize:#eae583:100",
+            on_use = function(itemstack, player, pointed_thing)
+                breathIsActive = 1
+                firstrun = 0
+                minetest.item_eat(0, "alchemy:lunar_potion")
+                player:set_physics_override({speed=2})
+                minetest.after(
+                        60,
+                        function()
+                            player:set_physics_override({speed=1})
+                        end
+                )
+                minetest.after(
+                        50,
+                        function()
+                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left")
+                        end
+                )
+            end
+        }
+)
 --todo:
 --waterbreathing done
---speed
+--speed done
 --leaping done
 --invisibility done
 --fortitude_potion done
 --nightvision
 --fireresistance
 --damage
---healingdone
+--healing done
