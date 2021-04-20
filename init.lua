@@ -1,4 +1,5 @@
 local slowheal = slowheal or {}
+alchemy = {players = {}}
 local time = 0
 minetest.register_globalstep(function(dtime)
     time = time + dtime
@@ -12,15 +13,20 @@ minetest.register_globalstep(function(dtime)
         time = 0
     end
 end)
+minetest.register_on_joinplayer(function(player)
+    phys = player:get_physics_override()
+    alchemy.players[player:get_player_name()] = {
+        speed = 0, default_speed = phys.speed, jump = 0, default_jump = phys.jump, gravity = 0, default_gravity = phys.gravity
+    }
+end)
+
+
 minetest.register_craftitem(
         "alchemy:breath_potion",
         {
             description = "Waterbreathing Potion I",
             inventory_image = "alchemy_base_potion.png^[colorize:#0429A5:100",
             on_use = function(itemstack, player, pointed_thing)
-                breathIsActive = 1
-                firstrun = 0
-                minetest.item_eat(1)
                 player:set_properties(
                         {
                             breath_max = 1000
@@ -40,6 +46,8 @@ minetest.register_craftitem(
                             minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of waterbreathing I ")
                         end
                 )
+                itemstack:take_item()
+                return itemstack
             end
         }
 
@@ -50,7 +58,6 @@ minetest.register_craftitem(
             description = "Fortitude Potion I",
             inventory_image = "alchemy_base_potion.png^[colorize:#940000:100",
             on_use = function(itemstack, player, pointed_thing)
-                minetest.item_eat(1)
                 player:set_properties(
                         {
                             hp_max = minetest.PLAYER_MAX_HP_DEFAULT * 2
@@ -70,6 +77,8 @@ minetest.register_craftitem(
                             minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of fortitude I")
                         end
                 )
+                itemstack:take_item()
+                return itemstack
             end
         }
 )
@@ -79,8 +88,8 @@ minetest.register_craftitem(
             description = "invisibility potion I",
             inventory_image = "alchemy_base_potion.png^[colorize:#708F9F:100",
             on_use = function(itemstack, player, pointed_thing)
-                minetest.item_eat(1)
-                prop = player:set_properties(
+                prop =
+                player:set_properties(
                         {
                             visual_size = {x = 0, y = 0},
                             is_visible = false
@@ -113,6 +122,8 @@ minetest.register_craftitem(
                             minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of invisibility I")
                         end
                 )
+                itemstack:take_item()
+                return itemstack
             end
         }
 )
@@ -122,8 +133,6 @@ minetest.register_craftitem(
             description = "slow healing potion I",
             inventory_image = "alchemy_base_potion.png^[colorize:#C91060:100",
             on_use= function(itemstack, player, pointed_thing)
-                minetest.item_eat(1))
-
                 slowheal = {player:get_player_name(),1}
                 print(slowheal)
                 minetest.after(
@@ -138,7 +147,8 @@ minetest.register_craftitem(
                             minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of slowhealing I ")
                         end
                 )
-
+                itemstack:take_item()
+                return itemstack
             end
         }
 )
@@ -148,23 +158,26 @@ minetest.register_craftitem(
             description = "Leaping Potion I",
             inventory_image = "alchemy_base_potion.png^[colorize:#7FFF00:100",
             on_use = function(itemstack, player, pointed_thing)
-                breathIsActive = 1
-                firstrun = 0
-                minetest.item_eat(1)
-                player:set_physics_override({jump=2})
-                minetest.after(
-                        60,
-                        function()
-                            player:set_physics_override({jump=1})
-                        end
-                )
-                minetest.after(
-                        50,
-                        function()
-                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of leaping I")
-                        end
-                )
-
+                physics = player:get_physics_override()
+                if alchemy.players[player:get_player_name()].jump == 0 then
+                    alchemy.players[player:get_player_name()].jump = player_monoids.jump:add_change(player, physics.jump*2)
+                    minetest.after(
+                            60,
+                            function()
+                                player_monoids.speed:del_change(player, alchemy.players[player:get_player_name()].jump)
+                                alchemy.players[player:get_player_name()].jump = 0
+                            end
+                    )
+                    minetest.after(
+                            50,
+                            function()
+                                minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of leaping I")
+                            end
+                    )
+                    itemstack:take_item()
+                    return itemstack
+                end
+                
             end
         }
 )
@@ -174,22 +187,26 @@ minetest.register_craftitem(
             description = "Lunar Potion I",
             inventory_image = "alchemy_base_potion.png^[colorize:#76b5c5:100",
             on_use = function(itemstack, player, pointed_thing)
-                breathIsActive = 1
-                firstrun = 0
-                minetest.item_eat(1)
-                player:set_physics_override({gravity=0.5})
-                minetest.after(
-                        60,
-                        function()
-                            player:set_physics_override({gravity=1})
-                        end
-                )
-                minetest.after(
-                        50,
-                        function()
-                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of lunar I")
-                        end
-                )
+                physics = player:get_physics_override()
+                if alchemy.players[player:get_player_name()].gravity == 0 then
+                    alchemy.players[player:get_player_name()].gravity = player_monoids.gravity:add_change(player, physics.gravity/2)
+                    minetest.after(
+                            60,
+                            function()
+                                player_monoids.gravity:del_change(player, alchemy.players[player:get_player_name()].gravity)
+                                alchemy.players[player:get_player_name()].gravity = 0
+                            end
+                    )
+                    minetest.after(
+                            50,
+                            function()
+                                minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of lunar I")
+                            end
+                    )
+                    itemstack:take_item()
+                    return itemstack
+                end
+
             end
         }
 )
@@ -201,20 +218,26 @@ minetest.register_craftitem(
             on_use = function(itemstack, player, pointed_thing)
                 breathIsActive = 1
                 firstrun = 0
-                minetest.item_eat(1)
-                player:set_physics_override({speed=2})
-                minetest.after(
-                        60,
-                        function()
-                            player:set_physics_override({speed=1})
-                        end
-                )
-                minetest.after(
-                        50,
-                        function()
-                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of speed I")
-                        end
-                )
+                physics = player:get_physics_override()
+                if alchemy.players[player:get_player_name()].speed == 0 then
+                    alchemy.players[player:get_player_name()].speed = player_monoids.speed:add_change(player, physics.speed*2)
+                    minetest.after(
+                            60,
+                            function()
+                                player_monoids.speed:del_change(player, alchemy.players[player:get_player_name()].speed)
+                                alchemy.players[player:get_player_name()].speed = 0
+                            end
+                    )
+                    minetest.after(
+                            50,
+                            function()
+                                minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of speed I")
+                            end
+                    )
+                    itemstack:take_item()
+                    return itemstack
+                end
+
             end
         }
 )
