@@ -164,7 +164,7 @@ minetest.register_craftitem(
                     minetest.after(
                             60,
                             function()
-                                player_monoids.speed:del_change(player, alchemy.players[player:get_player_name()].jump)
+                                player_monoids.jump:del_change(player, alchemy.players[player:get_player_name()].jump)
                                 alchemy.players[player:get_player_name()].jump = 0
                             end
                     )
