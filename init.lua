@@ -41,7 +41,7 @@ minetest.register_craftitem(
                 minetest.after(
                         50,
                         function()
-                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left")
+                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of waterbreathing I ")
                         end
                 )
             end
@@ -70,7 +70,7 @@ minetest.register_craftitem(
                 minetest.after(
                         50,
                         function()
-                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left")
+                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of fortitude I")
                         end
                 )
             end
@@ -114,7 +114,7 @@ minetest.register_craftitem(
                 minetest.after(
                         50,
                         function()
-                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left")
+                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of invisibility I")
                         end
                 )
             end
@@ -138,7 +138,7 @@ minetest.register_craftitem(
                 minetest.after(
                         50,
                         function()
-                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left")
+                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of slowhealing I ")
                         end
                 )
             end
@@ -163,7 +163,7 @@ minetest.register_craftitem(
                 minetest.after(
                         50,
                         function()
-                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left")
+                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of leaping I")
                         end
                 )
             end
@@ -188,7 +188,7 @@ minetest.register_craftitem(
                 minetest.after(
                         50,
                         function()
-                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left")
+                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of lunar I")
                         end
                 )
             end
@@ -213,7 +213,7 @@ minetest.register_craftitem(
                 minetest.after(
                         50,
                         function()
-                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left")
+                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of speed I")
                         end
                 )
             end
