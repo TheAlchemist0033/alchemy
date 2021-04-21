@@ -1,6 +1,8 @@
 local slowheal = slowheal or {}
 alchemy = {players = {}}
 local time = 0
+local path = minetest.get_modpath(minetest.get_current_modname()) .. "/"
+
 minetest.register_globalstep(function(dtime)
     time = time + dtime
     if time >= 3 then
@@ -246,6 +248,8 @@ minetest.register_craftitem(
 minetest.register_on_leaveplayer(function(player)
 	alchemy.players[player:get_player_name()] = nil
 end)
+dofile(path .. 'items.lua')
+dofile(path .. 'mobs.lua')
 --todo:
 --waterbreathing done
 --speed done
