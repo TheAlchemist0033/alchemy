@@ -241,6 +241,13 @@ minetest.register_craftitem(
             end
         }
 )
+
+minetest.register_craftitem(
+        "alchemy:eye_of_earth",
+        {
+            description = "Eye of Earth",
+            inventory_image = "alchemy_earth_eye.png",
+)
 minetest.register_on_leaveplayer(function(player)
 	alchemy.players[player:get_player_name()] = nil
 end)
