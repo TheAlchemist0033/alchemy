@@ -38,7 +38,7 @@ minetest.register_craftitem(
                 minetest.after(
                         60,
                         function()
-			    minetest.chat_send_player(player:get_player_name(), "Effects worn off for Waterbreathing I")
+                            minetest.chat_send_player(player:get_player_name(), "Effects worn off for Waterbreathing I")
                             player:set_properties({breath_max = minetest.PLAYER_MAX_BREATH_DEFAULT})
                             player:set_breath(10)
                         end
@@ -70,7 +70,7 @@ minetest.register_craftitem(
                 minetest.after(
                         60,
                         function()
-			    minetest.chat_send_player(player:get_player_name(), "Effects worn off for Fortitude I")
+                            minetest.chat_send_player(player:get_player_name(), "Effects worn off for Fortitude I")
                             player:set_properties({hp_max = minetest.PLAYER_MAX_HP_DEFAULT})
                             player:set_hp(10)
                         end
@@ -107,7 +107,7 @@ minetest.register_craftitem(
                 minetest.after(
                         60,
                         function()
-			    minetest.chat_send_player(player:get_player_name(), "Effects worn off for Invisibility I")
+                            minetest.chat_send_player(player:get_player_name(), "Effects worn off for Invisibility I")
                             player:set_properties(
                                     {
                                         visual_size = {x = 1, y = 1},
@@ -143,7 +143,7 @@ minetest.register_craftitem(
                 minetest.after(
                         60,
                         function()
-			    minetest.chat_send_player(player:get_player_name(), "Effects worn off for Slowhealing I")
+                            minetest.chat_send_player(player:get_player_name(), "Effects worn off for Slowhealing I")
                             slowheal = {player:get_player_name(),0}
                         end
                 )
@@ -170,7 +170,7 @@ minetest.register_craftitem(
                     minetest.after(
                             60,
                             function()
-				minetest.chat_send_player(player:get_player_name(), "Effects worn off for Leaping I")
+                                minetest.chat_send_player(player:get_player_name(), "Effects worn off for Leaping I")
                                 player_monoids.jump:del_change(player, alchemy.players[player:get_player_name()].jump)
                                 alchemy.players[player:get_player_name()].jump = 0
                             end
@@ -184,7 +184,7 @@ minetest.register_craftitem(
                     itemstack:take_item()
                     return itemstack
                 end
-                
+
             end
         }
 )
@@ -200,7 +200,7 @@ minetest.register_craftitem(
                     minetest.after(
                             60,
                             function()
-						minetest.chat_send_player(player:get_player_name(), "Effects worn off for Lunar I")
+                                minetest.chat_send_player(player:get_player_name(), "Effects worn off for Lunar I")
                                 player_monoids.gravity:del_change(player, alchemy.players[player:get_player_name()].gravity)
                                 alchemy.players[player:get_player_name()].gravity = 0
                             end
@@ -232,7 +232,7 @@ minetest.register_craftitem(
                     minetest.after(
                             60,
                             function()
-						minetest.chat_send_player(player:get_player_name(), "Effects worn off for Speed I")
+                                minetest.chat_send_player(player:get_player_name(), "Effects worn off for Speed I")
                                 player_monoids.speed:del_change(player, alchemy.players[player:get_player_name()].speed)
                                 alchemy.players[player:get_player_name()].speed = 0
                             end
@@ -258,37 +258,28 @@ minetest.register_craftitem(
             on_use = function(itemstack, player, pointed_thing)
                 player:override_day_night_ratio(1)
                 minetest.after(
-                            60,
-                            function()
-				minetest.chat_send_player(player:get_player_name(), "Effects worn off for Nightvision I")
-                                player:override_day_night_ratio(nil)
-                            end
-                    )
-                    minetest.after(
-                            50,
-                            function()
-                                minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of nightvision I")
-                            end
-                    )
-                    itemstack:take_item()
-                    return itemstack
+                        60,
+                        function()
+                            minetest.chat_send_player(player:get_player_name(), "Effects worn off for Nightvision I")
+                            player:override_day_night_ratio(nil)
+                        end
+                )
+                minetest.after(
+                        50,
+                        function()
+                            minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of nightvision I")
+                        end
+                )
+                itemstack:take_item()
+                return itemstack
             end
         }
 )
-
-
-minetest.register_on_leaveplayer(function(player)
-	alchemy.players[player:get_player_name()] = nil
-end)
 dofile(path .. 'items.lua')
 dofile(path .. 'mobs.lua')
---todo:
---waterbreathing done
---speed done
---leaping done
---invisibility done
---fortitude_potion done
---nightvision
---fireresistance
---damage
---healing done
+dofile(path .. 'earth_monster.lua')
+dofile(path .. 'recipes.lua')
+dofile(path .. 'throwpotion.lua')
+minetest.register_on_leaveplayer(function(player)
+    alchemy.players[player:get_player_name()] = nil
+end)
