@@ -26,3 +26,24 @@ minetest.register_craftitem(
             inventory_image = "alchemy_fire_essence.png",
         }
 )
+minetest.register_craftitem(
+        "alchemy:essence_of_water",
+        {
+            description = "Essence of Water",
+            inventory_image = "alchemy_water_essence.png",
+        }
+)
+minetest.register_craftitem(
+        "alchemy:essence_of_earth",
+        {
+            description = "Essence of Earth",
+            inventory_image = "alchemy_earth_essence.png",
+        }
+)
+minetest.register_craftitem(
+        "alchemy:essence_of_air",
+        {
+            description = "Essence of Air",
+            inventory_image = "alchemy_air_essence.png",
+        }
+)
