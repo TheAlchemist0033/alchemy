@@ -65,26 +65,31 @@ potion_entity.on_step = function(self, dtime)
                 end
                 --end player finding
                 -- round up coords to fix glitching through doors
-                player = self.player
-                physics = player:get_physics_override()
-                minetest.chat_send_all(player:get_player_name() .. " has been hit with a splash potion of speed!")
-            end
-                if alchemy.players[player:get_player_name()].speed == 0 then
-                    alchemy.players[player:get_player_name()].speed = player_monoids.speed:add_change(player, physics.speed*2)
-                    minetest.after(
-                            60,
-                            function()
-                                minetest.chat_send_player(player:get_player_name(), "Effects worn off for Speed I")
-                                player_monoids.speed:del_change(player, alchemy.players[player:get_player_name()].speed)
-                                alchemy.players[player:get_player_name()].speed = 0
-                            end
-                    )
-                    minetest.after(
-                            50,
-                            function()
-                                minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of Speed I")
-                            end
-                    )
+                if closest_name~= nil then
+                    player = closest_name
+                    physics = player:get_physics_override()
+                    minetest.chat_send_all(player:get_player_name() .. " has been hit with a splash potion of speed!")
+
+                    if alchemy.players[player:get_player_name()].speed == 0 then
+                        alchemy.players[player:get_player_name()].speed = player_monoids.speed:add_change(player, physics.speed*2)
+                        minetest.after(
+                                60,
+                                function()
+                                    minetest.chat_send_player(player:get_player_name(), "Effects worn off for Speed I")
+                                    player_monoids.speed:del_change(player, alchemy.players[player:get_player_name()].speed)
+                                    alchemy.players[player:get_player_name()].speed = 0
+                                end
+                        )
+                        minetest.after(
+                                50,
+                                function()
+                                    minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of Speed I")
+                                end
+                        )
+
+                    end
+
+                end
             end
             self.object:remove()
             return
