@@ -3,108 +3,293 @@
 --- Created by jekyl.
 --- DateTime: 4/23/2021 9:01 AM
 ---
-alchemy = {players = {}}
-potions = {
-    {"alchemy_base_potion.png^[colorize:#0429A5:100", "alchemy:breath_potion"},
-    {"alchemy_base_potion.png^[colorize:#940000:100", "alchemy:fortitude_potion"},
-    {"alchemy_base_potion.png^[colorize:#708F9F:100", "alchemy:invisibility_potion" },
-    {"alchemy_base_potion.png^[colorize:#C91060:100", "alchemy:slow_healing_potion"},
-    {"alchemy_base_potion.png^[colorize:#7FFF00:100", "alchemy:leaping_potion"},
-    {"alchemy_base_potion.png^[colorize:#76b5c5:100", "alchemy:lunar_potion"},
-    {"alchemy_base_potion.png^[colorize:#eae583:100", "alchemy:speed_potion"},
-    {"alchemy_base_potion.png^[colorize:#00720d:100","alchemy:nightvision_potion"}
-}
- function throwables( tex, pot)
-    local function throw_potion(itemstack, player)
-        local playerpos = player:get_pos()
-        local obj = minetest.add_entity({
-            x = playerpos.x,
-            y = playerpos.y + 1.5,
-            z = playerpos.z
-        }, pot .. "_entity")
-        local dir = player:get_look_dir()
-        local velocity = 20
-        obj:set_velocity({
-            x = dir.x * velocity,
-            y = dir.y * velocity,
-            z = dir.z * velocity
-        })
-        obj:set_acceleration({
-            x = dir.x * -3,
-            y = -9.5,
-            z = dir.z * -3
-        })
-        obj:set_yaw(player:get_look_horizontal())
-        obj:get_luaentity().player = player
-    end
-    -- potion entity
-    local potion_entity = {
-        physical = true,
-        visual = "sprite",
-        visual_size = {x = 1.0, y = 1.0},
-        textures = {tex},
-        collisionbox = {-0.1,-0.1,-0.1,0.1,0.1,0.1},
-        lastpos = {},
-        player = ""
-    }
-    potion_entity.on_step = function(self, dtime)
-
-
-        if not self.player then
-            self.object:remove()
-            return
-        end
-        local pos = self.object:get_pos()
-        if self.lastpos.x ~= nil then
-            local vel = self.object:get_velocity()
-            -- only when potion hits something physical
-            if vel.x == 0
-                    or vel.y == 0
-                    or vel.z == 0 then
-                if self.player ~= "" then
-                    local closest_d = 999
-                    local closest_name
-                    for i, obj in ipairs(minetest.get_objects_inside_radius(pos,3)) do
-                        -- 5.0.0+ method:
-                        if minetest.is_player(obj) then
-                            local distance = vector.length(vector.subtract(obj:get_pos(), pos))
-                            if distance < closest_d then
-                                closest_d = distance
-                                closest_name = obj
-                            end
-                        end
-                    end
-                    --end player finding
-                    -- round up coords to fix glitching through doors
-                    if closest_name~= nil then
-                        player = closest_name
-                        minetest.chat_send_all(player:get_player_name() .. " has been hit with a splash potion of" .. pot .. "!")
-                        --effect of whatever pot is, goes here.
-
-                        end
-
-                    end
+---
+effect = function (player,effect)
+    if effect == "waterbreathing" then
+        player:set_properties(
+                {
+                    breath_max = 1000
+                }
+        )
+        player:set_breath(1000)
+        minetest.after(
+                60,
+                function()
+                    minetest.chat_send_player(player:get_player_name(), "Effects worn off for Waterbreathing I")
+                    player:set_properties({breath_max = minetest.PLAYER_MAX_BREATH_DEFAULT})
+                    player:set_breath(10)
                 end
+        )
+        minetest.after(
+                50,
+                function()
+                    minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of Waterbreathing I ")
+                end
+        )
+    end
+    if effect == "fortitude" then
+        player:set_properties(
+                {
+                    hp_max = minetest.PLAYER_MAX_HP_DEFAULT * 2
+                }
+        )
+        player:set_hp(minetest.PLAYER_MAX_HP_DEFAULT * 2)
+        minetest.after(
+                60,
+                function()
+                    minetest.chat_send_player(player:get_player_name(), "Effects worn off for Fortitude I")
+                    player:set_properties({hp_max = minetest.PLAYER_MAX_HP_DEFAULT})
+                    player:set_hp(10)
+                end
+        )
+        minetest.after(
+                50,
+                function()
+                    minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of Fortitude I")
+                end
+        )
+    end
+    if effect == "invisibility" then
+        prop =
+        player:set_properties(
+                {
+                    visual_size = {x = 0, y = 0},
+                    is_visible = false
+                }
+        )
+        player:set_nametag_attributes(
+                {
+                    color = {a = 0, r = 255, g = 255, b = 255}
+                }
+        )
+        minetest.after(
+                60,
+                function()
+                    minetest.chat_send_player(player:get_player_name(), "Effects worn off for Invisibility I")
+                    player:set_properties(
+                            {
+                                visual_size = {x = 1, y = 1},
+                                is_visible = true
+                            }
+                    )
+                    player:set_nametag_attributes(
+                            {
+                                color = {a = 255, r = 255, g = 255, b = 255}
+                            }
+                    )
+                end
+        )
+        minetest.after(
+                50,
+                function()
+                    minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of Invisibility I")
+                end
+        )
+    end
+    if effect == "slowheal" then
+        slowheal = {player:get_player_name(),1}
+        minetest.after(
+                60,
+                function()
+                    minetest.chat_send_player(player:get_player_name(), "Effects worn off for Slowhealing I")
+                    slowheal = {player:get_player_name(),0}
+                end
+        )
+        minetest.after(
+                50,
+                function()
+                    minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of Slowhealing I ")
+                end
+        )
+    end
+    if effect == "leap" then
+        physics = player:get_physics_override()
+        if alchemy.players[player:get_player_name()].jump == 0 then
+            alchemy.players[player:get_player_name()].jump = player_monoids.jump:add_change(player, physics.jump*2)
+            minetest.after(
+                    60,
+                    function()
+                        minetest.chat_send_player(player:get_player_name(), "Effects worn off for Leaping I")
+                        player_monoids.jump:del_change(player, alchemy.players[player:get_player_name()].jump)
+                        alchemy.players[player:get_player_name()].jump = 0
+                    end
+            )
+            minetest.after(
+                    50,
+                    function()
+                        minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of Leaping I")
+                    end
+            )
+        end
+    end
+    if effect == "lunar" then
+        physics = player:get_physics_override()
+        if alchemy.players[player:get_player_name()].gravity == 0 then
+            alchemy.players[player:get_player_name()].gravity = player_monoids.gravity:add_change(player, physics.gravity/2)
+            minetest.after(
+                    60,
+                    function()
+                        minetest.chat_send_player(player:get_player_name(), "Effects worn off for Lunar I")
+                        player_monoids.gravity:del_change(player, alchemy.players[player:get_player_name()].gravity)
+                        alchemy.players[player:get_player_name()].gravity = 0
+                    end
+            )
+            minetest.after(
+                    50,
+                    function()
+                        minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of Lunar I")
+                    end
+            )
+        end
+    end
+    if effect == "speed" then
+        phys = player:get_physics_override()
+        if alchemy.players[player:get_player_name()].speed == 0 then
+            alchemy.players[player:get_player_name()].speed = player_monoids.speed:add_change(player, physics.speed*2)
+            minetest.after(
+                    60,
+                    function()
+                        minetest.chat_send_player(player:get_player_name(), "Effects worn off for Speed I")
+                        player_monoids.speed:del_change(player, alchemy.players[player:get_player_name()].speed)
+                        alchemy.players[player:get_player_name()].speed = 0
+                    end
+            )
+            minetest.after(
+                    50,
+                    function()
+                        minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of Speed I")
+                    end
+            )
+        end
+    end
+    if effect == "nightvision" then
+        player:override_day_night_ratio(1)
+        minetest.after(
+                60,
+                function()
+                    minetest.chat_send_player(player:get_player_name(), "Effects worn off for Nightvision I")
+                    player:override_day_night_ratio(nil)
+                end
+        )
+        minetest.after(
+                50,
+                function()
+                    minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of nightvision I")
+                end
+        )
+    end
+end
+    ---end effect functions
+
+
+
+    alchemy = {players = {}}
+    potions = {
+        {"alchemy_base_potion.png^[colorize:#0429A5:100", "alchemy:breath_potion", "waterbreathing"},
+        {"alchemy_base_potion.png^[colorize:#940000:100", "alchemy:fortitude_potion","fortitude"},
+        {"alchemy_base_potion.png^[colorize:#708F9F:100", "alchemy:invisibility_potion","invisibility" },
+        {"alchemy_base_potion.png^[colorize:#C91060:100", "alchemy:slow_healing_potion","slowheal"},
+        {"alchemy_base_potion.png^[colorize:#7FFF00:100", "alchemy:leaping_potion","leap"},
+        {"alchemy_base_potion.png^[colorize:#76b5c5:100", "alchemy:lunar_potion","lunar"},
+        {"alchemy_base_potion.png^[colorize:#eae583:100", "alchemy:speed_potion","speed"},
+        {"alchemy_base_potion.png^[colorize:#00720d:100","alchemy:nightvision_potion","nightvision"}
+    }
+    function throwables( tex, pot, effects)
+        strr = string.gsub(pot, "alchemy:", "")
+        humanname = string.gsub(strr, "_", " ")
+        local function throw_potion(itemstack, player)
+            local playerpos = player:get_pos()
+            local obj = minetest.add_entity({
+                x = playerpos.x,
+                y = playerpos.y + 1.5,
+                z = playerpos.z
+            }, pot .. "_entity")
+            local dir = player:get_look_dir()
+            local velocity = 20
+            obj:set_velocity({
+                x = dir.x * velocity,
+                y = dir.y * velocity,
+                z = dir.z * velocity
+            })
+            obj:set_acceleration({
+                x = dir.x * -3,
+                y = -9.5,
+                z = dir.z * -3
+            })
+            obj:set_yaw(player:get_look_horizontal())
+            obj:get_luaentity().player = player
+        end
+        -- potion entity
+        local potion_entity = {
+            physical = true,
+            visual = "sprite",
+            visual_size = {x = 1.0, y = 1.0},
+            textures = {tex},
+            collisionbox = {-0.1,-0.1,-0.1,0.1,0.1,0.1},
+            lastpos = {},
+            player = ""
+        }
+        potion_entity.on_step = function(self, dtime)
+
+
+            if not self.player then
                 self.object:remove()
                 return
             end
-        end
-     
-        self.lastpos = pos
+            local pos = self.object:get_pos()
+            if self.lastpos.x ~= nil then
+                local vel = self.object:get_velocity()
+                -- only when potion hits something physical
+                if vel.x == 0
+                        or vel.y == 0
+                        or vel.z == 0 then
+                    if self.player ~= "" then
+                        local closest_d = 999
+                        local closest_name
+                        for i, obj in ipairs(minetest.get_objects_inside_radius(pos,3)) do
+                            -- 5.0.0+ method:
+                            if minetest.is_player(obj) then
+                                local distance = vector.length(vector.subtract(obj:get_pos(), pos))
+                                if distance < closest_d then
+                                    closest_d = distance
+                                    closest_name = obj
+                                end
+                            end
+                        end
+                        --end player finding
+                        -- round up coords to fix glitching through doors
+                        if closest_name~= nil then
+                            player = closest_name
+                            minetest.chat_send_all(player:get_player_name() .. " has been hit with a splash potion of" .. pot .. "!")
+                            effect(player,effects)
 
-    minetest.register_entity(pot .. "_entity", potion_entity)
+                        end
 
-    minetest.register_craftitem(
-            pot .. "_throw",
-            {
-                description = "throwable" .. pot ,
-                inventory_image = "alchemy_base_potion.png^[colorize:#eae583:100",
-                on_use = function(itemstack, player, pointed_thing)
-                    throw_potion(itemstack, player)
-                    itemstack:take_item()
-                    return itemstack
+
+                    end
+                    self.object:remove()
+                    return
                 end
-            }
-    )
-     return tplayer
- end
+
+            end
+            self.lastpos = pos
+        end
+
+        minetest.register_entity(pot .. "_entity", potion_entity)
+
+        minetest.register_craftitem(
+                pot .. "_throw",
+                {
+                    description = "Throwable " .. humanname ,
+                    inventory_image = tex,
+                    on_use = function(itemstack, player, pointed_thing)
+                        throw_potion(itemstack, player)
+                        itemstack:take_item()
+                        return itemstack
+                    end
+                }
+        )
+    end
+for i in ipairs(potions) do
+    throwables(potions[i][1],potions[i][2],potions[i][3])
+end
