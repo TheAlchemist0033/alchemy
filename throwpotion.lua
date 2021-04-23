@@ -4,112 +4,107 @@
 --- DateTime: 4/23/2021 9:01 AM
 ---
 alchemy = {players = {}}
-local function throw_potion(itemstack, player)
-    local playerpos = player:get_pos()
-    local obj = minetest.add_entity({
-        x = playerpos.x,
-        y = playerpos.y + 1.5,
-        z = playerpos.z
-    }, "alchemy:speed_potion_entity")
-    local dir = player:get_look_dir()
-    local velocity = 20
-    obj:set_velocity({
-        x = dir.x * velocity,
-        y = dir.y * velocity,
-        z = dir.z * velocity
-    })
-    obj:set_acceleration({
-        x = dir.x * -3,
-        y = -9.5,
-        z = dir.z * -3
-    })
-    obj:set_yaw(player:get_look_horizontal())
-    obj:get_luaentity().player = player
-end
--- potion entity
-local potion_entity = {
-    physical = true,
-    visual = "sprite",
-    visual_size = {x = 1.0, y = 1.0},
-    textures = {"alchemy_base_potion.png"},
-    collisionbox = {-0.1,-0.1,-0.1,0.1,0.1,0.1},
-    lastpos = {},
-    player = ""
+potions = {
+    {"alchemy_base_potion.png^[colorize:#0429A5:100", "alchemy:breath_potion"},
+    {"alchemy_base_potion.png^[colorize:#940000:100", "alchemy:fortitude_potion"},
+    {"alchemy_base_potion.png^[colorize:#708F9F:100", "alchemy:invisibility_potion" },
+    {"alchemy_base_potion.png^[colorize:#C91060:100", "alchemy:slow_healing_potion"},
+    {"alchemy_base_potion.png^[colorize:#7FFF00:100", "alchemy:leaping_potion"},
+    {"alchemy_base_potion.png^[colorize:#76b5c5:100", "alchemy:lunar_potion"},
+    {"alchemy_base_potion.png^[colorize:#eae583:100", "alchemy:speed_potion"},
+    {"alchemy_base_potion.png^[colorize:#00720d:100","alchemy:nightvision_potion"}
 }
-potion_entity.on_step = function(self, dtime)
-
-
-    if not self.player then
-        self.object:remove()
-        return
+ function throwables( tex, pot)
+    local function throw_potion(itemstack, player)
+        local playerpos = player:get_pos()
+        local obj = minetest.add_entity({
+            x = playerpos.x,
+            y = playerpos.y + 1.5,
+            z = playerpos.z
+        }, pot .. "_entity")
+        local dir = player:get_look_dir()
+        local velocity = 20
+        obj:set_velocity({
+            x = dir.x * velocity,
+            y = dir.y * velocity,
+            z = dir.z * velocity
+        })
+        obj:set_acceleration({
+            x = dir.x * -3,
+            y = -9.5,
+            z = dir.z * -3
+        })
+        obj:set_yaw(player:get_look_horizontal())
+        obj:get_luaentity().player = player
     end
-    local pos = self.object:get_pos()
-    if self.lastpos.x ~= nil then
-        local vel = self.object:get_velocity()
-        -- only when potion hits something physical
-        if vel.x == 0
-                or vel.y == 0
-                or vel.z == 0 then
-            if self.player ~= "" then
-                local closest_d = 999
-                local closest_name
-                for i, obj in ipairs(minetest.get_objects_inside_radius(pos,3)) do
-                    -- 5.0.0+ method:
-                    if minetest.is_player(obj) then
-                        local distance = vector.length(vector.subtract(obj:get_pos(), pos))
-                        if distance < closest_d then
-                            closest_d = distance
-                            closest_name = obj
-                        end
-                    end
-                end
-                --end player finding
-                -- round up coords to fix glitching through doors
-                if closest_name~= nil then
-                    player = closest_name
-                    physics = player:get_physics_override()
-                    minetest.chat_send_all(player:get_player_name() .. " has been hit with a splash potion of speed!")
+    -- potion entity
+    local potion_entity = {
+        physical = true,
+        visual = "sprite",
+        visual_size = {x = 1.0, y = 1.0},
+        textures = {tex},
+        collisionbox = {-0.1,-0.1,-0.1,0.1,0.1,0.1},
+        lastpos = {},
+        player = ""
+    }
+    potion_entity.on_step = function(self, dtime)
 
-                    if alchemy.players[player:get_player_name()].speed == 0 then
-                        alchemy.players[player:get_player_name()].speed = player_monoids.speed:add_change(player, physics.speed*2)
-                        minetest.after(
-                                60,
-                                function()
-                                    minetest.chat_send_player(player:get_player_name(), "Effects worn off for Speed I")
-                                    player_monoids.speed:del_change(player, alchemy.players[player:get_player_name()].speed)
-                                    alchemy.players[player:get_player_name()].speed = 0
-                                end
-                        )
-                        minetest.after(
-                                50,
-                                function()
-                                    minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of Speed I")
-                                end
-                        )
 
-                    end
-
-                end
-            end
+        if not self.player then
             self.object:remove()
             return
         end
-    end
-    self.lastpos = pos
-end
-minetest.register_entity("alchemy:speed_potion_entity", potion_entity)
+        local pos = self.object:get_pos()
+        if self.lastpos.x ~= nil then
+            local vel = self.object:get_velocity()
+            -- only when potion hits something physical
+            if vel.x == 0
+                    or vel.y == 0
+                    or vel.z == 0 then
+                if self.player ~= "" then
+                    local closest_d = 999
+                    local closest_name
+                    for i, obj in ipairs(minetest.get_objects_inside_radius(pos,3)) do
+                        -- 5.0.0+ method:
+                        if minetest.is_player(obj) then
+                            local distance = vector.length(vector.subtract(obj:get_pos(), pos))
+                            if distance < closest_d then
+                                closest_d = distance
+                                closest_name = obj
+                            end
+                        end
+                    end
+                    --end player finding
+                    -- round up coords to fix glitching through doors
+                    if closest_name~= nil then
+                        player = closest_name
+                        minetest.chat_send_all(player:get_player_name() .. " has been hit with a splash potion of" .. pot .. "!")
+                        --effect of whatever pot is, goes here.
 
-minetest.register_craftitem(
-        "alchemy:speed_throw_potion",
-        {
-            description = "Speed Potion I",
-            inventory_image = "alchemy_base_potion.png^[colorize:#eae583:100",
-            on_use = function(itemstack, player, pointed_thing)
-                breathIsActive = 1
-                firstrun = 0
-                throw_potion(itemstack, player)
+                        end
+
+                    end
+                end
+                self.object:remove()
+                return
+            end
+        end
+     
+        self.lastpos = pos
+
+    minetest.register_entity(pot .. "_entity", potion_entity)
+
+    minetest.register_craftitem(
+            pot .. "_throw",
+            {
+                description = "throwable" .. pot ,
+                inventory_image = "alchemy_base_potion.png^[colorize:#eae583:100",
+                on_use = function(itemstack, player, pointed_thing)
+                    throw_potion(itemstack, player)
                     itemstack:take_item()
                     return itemstack
-            end
-        }
-)
+                end
+            }
+    )
+     return tplayer
+ end
