@@ -277,7 +277,6 @@ minetest.register_craftitem(
 )
 dofile(path .. 'items.lua')
 dofile(path .. 'mobs.lua')
-dofile(path .. 'earth_monster.lua')
 dofile(path .. 'recipes.lua')
 dofile(path .. 'throwpotion.lua')
 minetest.register_on_leaveplayer(function(player)
