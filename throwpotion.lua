@@ -143,7 +143,7 @@ effect = function (player,effect)
         end
     end
     if effect == "speed" then
-        phys = player:get_physics_override()
+        physics = player:get_physics_override()
         if alchemy.players[player:get_player_name()].speed == 0 then
             alchemy.players[player:get_player_name()].speed = player_monoids.speed:add_change(player, physics.speed*2)
             minetest.after(
