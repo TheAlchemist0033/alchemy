@@ -110,8 +110,11 @@ effect = function (player,effect)
                     60,
                     function()
                         minetest.chat_send_player(player:get_player_name(), "Effects worn off for Leaping I")
-                        player_monoids.jump:del_change(player, alchemy.players[player:get_player_name()].jump)
-                        alchemy.players[player:get_player_name()].jump = 0
+                        if alchemy.players[player:get_player_name()] ~= nil then
+                            player_monoids.jump:del_change(player, alchemy.players[player:get_player_name()].jump)
+                            alchemy.players[player:get_player_name()].jump = 0
+                        end
+
                     end
             )
             minetest.after(
@@ -130,8 +133,11 @@ effect = function (player,effect)
                     60,
                     function()
                         minetest.chat_send_player(player:get_player_name(), "Effects worn off for Lunar I")
-                        player_monoids.gravity:del_change(player, alchemy.players[player:get_player_name()].gravity)
-                        alchemy.players[player:get_player_name()].gravity = 0
+                        if alchemy.players[player:get_player_name()] ~= nil then
+                            player_monoids.gravity:del_change(player, alchemy.players[player:get_player_name()].gravity)
+                            alchemy.players[player:get_player_name()].gravity = 0
+                        end
+
                     end
             )
             minetest.after(
@@ -150,8 +156,11 @@ effect = function (player,effect)
                     60,
                     function()
                         minetest.chat_send_player(player:get_player_name(), "Effects worn off for Speed I")
-                        player_monoids.speed:del_change(player, alchemy.players[player:get_player_name()].speed)
-                        alchemy.players[player:get_player_name()].speed = 0
+                        if alchemy.players[player:get_player_name()] ~= nil then
+                            player_monoids.speed:del_change(player, alchemy.players[player:get_player_name()].speed)
+                            alchemy.players[player:get_player_name()].speed = 0
+                        end
+
                     end
             )
             minetest.after(
