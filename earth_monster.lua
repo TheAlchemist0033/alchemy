@@ -5,7 +5,10 @@ local dirt_types = {
 	{	nodes = {"default:dirt"},
 		skins = {"alchemy_earth_mob.png"},
 		drops = {
-			{name = "alchemy:eye_of_earth", chance = 20, min = 0, max = 2}
+			{name = "alchemy:eye_of_earth", chance = 10, min = 1, max = 2},
+			{name = "default:diamond", chance = 10, min = 0, max = 3},
+			{name = "alchemy:earth_essence", chance = 20, min = 0, max =1}
+
 		}
 	}
 }
