@@ -25,7 +25,7 @@ mobs:register_mob("alchemy:gaea_spawnling", {
 	visual = "mesh",
 	mesh = "Earthmob.b3d",
 	textures = {
-	{"stone.png"}
+	{"alchemy_earth_mob.png"}
 	},
 	blood_texture = "default_stone.png",
 	makes_footstep_sound = true,
