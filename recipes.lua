@@ -3,7 +3,7 @@
 --- Created by jekyl.
 --- DateTime: 4/21/2021 10:55 PM
 ---
-local eth = minetest.get_modpath("ethereal")
+local eth = minetest.get_modpath("ethereal")-- probably not a permanent depend.
 local buck = minetest.get_modpath("bucket")
 if eth and buck then
     minetest.register_craft({
@@ -66,7 +66,7 @@ if eth and buck then
         output = "alchemy:nightvision_potion",
         recipe = {
             {"default:mese", "ethereal:coral5", "default:mese"},
-            {"alchemy:arboreal_tooth", "vessels:glass_bottle", "alchemy:arboreal_tooth"},
+            {"alchemy:arboreal_tooth", "a", "alchemy:arboreal_tooth"},
             {"ethereal:banana_bread", "ethereal:coral5","ethereal:agar_powder"}
         }
     })
