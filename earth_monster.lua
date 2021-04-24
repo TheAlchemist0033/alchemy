@@ -30,7 +30,8 @@ mobs:register_mob("alchemy:gaea_spawnling", {
 	blood_texture = "default_stone.png",
 	makes_footstep_sound = true,
 	sounds = {
-		random = "earthmob_defaults",
+		random = "alchemy_earth_defaults",
+		jump = "alchemy_step"
 	},
 	view_range = 20,
 	walk_velocity = 1,
