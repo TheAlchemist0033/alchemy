@@ -5,7 +5,7 @@ local dirt_types = {
 	{	nodes = {"default:dirt"},
 		skins = {"alchemy_earth_mob.png"},
 		drops = {
-			{name = "alchemy:eye_of_earth", chance = 10, min = 1, max = 2},
+			{name = "alchemy:eye_of_earth", chance = 10, min = 0, max = 2},
 			{name = "default:diamond", chance = 10, min = 0, max = 3},
 			{name = "alchemy:earth_essence", chance = 20, min = 0, max =1}
 
@@ -21,10 +21,10 @@ mobs:register_mob("alchemy:gaea_spawnling", {
 	pathfinding = true,
 	reach = 2,
 	damage = 3,
-	hp_min = 45,
-	hp_max = 54,
+	hp_min = 80,
+	hp_max = 100,
 	armor = 200,
-	collisionbox = {-1, 0, -1, 0.5, 1.5,0.5},
+	collisionbox = {-0.75, 0, -1, 0.75, 1.5,0.5},
 	visual = "mesh",
 	mesh = "Earthmob.b3d",
 	textures = {
