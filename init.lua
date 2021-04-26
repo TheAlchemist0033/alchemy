@@ -23,15 +23,15 @@ minetest.register_on_joinplayer(function(player)
 end)
 
 potions = {
-    {"alchemy_base_throwpotion.png", "alchemy:base_potion", "basepotion"},
-    {"alchemy_base_throwpotion.png^[colorize:#0429A5:100", "alchemy:breath_potion", "waterbreathing"},
-    {"alchemy_base_throwpotion.png^[colorize:#940000:100", "alchemy:fortitude_potion","fortitude"},
-    {"alchemy_base_throwpotion.png^[colorize:#708F9F:100", "alchemy:invisibility_potion","invisibility" },
-    {"alchemy_base_throwpotion.png^[colorize:#C91060:100", "alchemy:slow_healing_potion","slowheal"},
-    {"alchemy_base_throwpotion.png^[colorize:#7FFF00:100", "alchemy:leaping_potion","leap"},
-    {"alchemy_base_throwpotion.png^[colorize:#76b5c5:100", "alchemy:lunar_potion","lunar"},
-    {"alchemy_base_throwpotion.png^[colorize:#eae583:100", "alchemy:speed_potion","speed"},
-    {"alchemy_base_throwpotion.png^[colorize:#00720d:100","alchemy:nightvision_potion","nightvision"}
+    {"alchemy_base_potion.png", "alchemy:base_potion", "basepotion"},
+    {"alchemy_base_potion.png^[colorize:#0429A5:100", "alchemy:breath_potion", "waterbreathing"},
+    {"alchemy_base_potion.png^[colorize:#940000:100", "alchemy:fortitude_potion","fortitude"},
+    {"alchemy_base_potion.png^[colorize:#708F9F:100", "alchemy:invisibility_potion","invisibility" },
+    {"alchemy_base_potion.png^[colorize:#C91060:100", "alchemy:slow_healing_potion","slowheal"},
+    {"alchemy_base_potion.png^[colorize:#7FFF00:100", "alchemy:leaping_potion","leap"},
+    {"alchemy_base_potion.png^[colorize:#76b5c5:100", "alchemy:lunar_potion","lunar"},
+    {"alchemy_base_potion.png^[colorize:#eae583:100", "alchemy:speed_potion","speed"},
+    {"alchemy_base_potion.png^[colorize:#00720d:100","alchemy:nightvision_potion","nightvision"}
 }
 function register_potions( tex, pot, effects)
 strr = string.gsub(pot, "alchemy:", "")
@@ -39,7 +39,7 @@ humanname = string.gsub(strr, "_", " ")
 minetest.register_craftitem(
         pot,
         {
-            description = "Throwable " .. humanname ,
+            description = humanname ,
             inventory_image = tex,
             on_use = function(itemstack, player, pointed_thing)
                 throw_potion(itemstack, player)
@@ -56,6 +56,7 @@ dofile(path .. 'items.lua')
 dofile(path .. 'mobs.lua')
 dofile(path .. 'earth_monster.lua')
 dofile(path .. 'recipes.lua')
+dofile(path .. 'grinder.lua')
 minetest.register_on_leaveplayer(function(player)
     alchemy.players[player:get_player_name()] = nil
 end)
