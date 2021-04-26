@@ -22,110 +22,41 @@ minetest.register_on_joinplayer(function(player)
     }
 end)
 
+potions = {
+    {"alchemy_base_throwpotion.png", "alchemy:base_potion", "basepotion"},
+    {"alchemy_base_throwpotion.png^[colorize:#0429A5:100", "alchemy:breath_potion", "waterbreathing"},
+    {"alchemy_base_throwpotion.png^[colorize:#940000:100", "alchemy:fortitude_potion","fortitude"},
+    {"alchemy_base_throwpotion.png^[colorize:#708F9F:100", "alchemy:invisibility_potion","invisibility" },
+    {"alchemy_base_throwpotion.png^[colorize:#C91060:100", "alchemy:slow_healing_potion","slowheal"},
+    {"alchemy_base_throwpotion.png^[colorize:#7FFF00:100", "alchemy:leaping_potion","leap"},
+    {"alchemy_base_throwpotion.png^[colorize:#76b5c5:100", "alchemy:lunar_potion","lunar"},
+    {"alchemy_base_throwpotion.png^[colorize:#eae583:100", "alchemy:speed_potion","speed"},
+    {"alchemy_base_throwpotion.png^[colorize:#00720d:100","alchemy:nightvision_potion","nightvision"}
+}
+function register_potions( tex, pot, effects)
+strr = string.gsub(pot, "alchemy:", "")
+humanname = string.gsub(strr, "_", " ")
 minetest.register_craftitem(
-        "alchemy:breath_potion",
+        pot,
         {
-            description = "Waterbreathing Potion I",
-            inventory_image = "alchemy_base_potion.png^[colorize:#0429A5:100",
+            description = "Throwable " .. humanname ,
+            inventory_image = tex,
             on_use = function(itemstack, player, pointed_thing)
-                effect(player,"waterbreathing")
-                itemstack:take_item()
-                return itemstack
-            end
-        }
-
-)
-minetest.register_craftitem(
-        "alchemy:fortitude_potion",
-        {
-            description = "Fortitude Potion I",
-            inventory_image = "alchemy_base_potion.png^[colorize:#940000:100",
-            on_use = function(itemstack, player, pointed_thing)
-                effect(player,"fortitude")
-                itemstack:take_item()
-                return itemstack
-            end
-        }
-)
-minetest.register_craftitem(
-        "alchemy:invisibility_potion",
-        {
-            description = "invisibility potion I",
-            inventory_image = "alchemy_base_potion.png^[colorize:#708F9F:100",
-            on_use = function(itemstack, player, pointed_thing)
-                effect(player,"invisibility")
+                throw_potion(itemstack, player)
                 itemstack:take_item()
                 return itemstack
             end
         }
 )
-minetest.register_craftitem(
-        "alchemy:slow_healing_potion",
-        {
-            description = "slow healing potion I",
-            inventory_image = "alchemy_base_potion.png^[colorize:#C91060:100",
-            on_use= function(itemstack, player, pointed_thing)
-                effect(player,"slowheal")
-                itemstack:take_item()
-                return itemstack
-            end
-        }
-)
-minetest.register_craftitem(
-        "alchemy:leaping_potion",
-        {
-            description = "Leaping Potion I",
-            inventory_image = "alchemy_base_potion.png^[colorize:#7FFF00:100",
-            on_use = function(itemstack, player, pointed_thing)
-                effect(player,"leap")
-                    itemstack:take_item()
-                    return itemstack
-
-            end
-        }
-)
-minetest.register_craftitem(
-        "alchemy:lunar_potion",
-        {
-            description = "Lunar Potion I",
-            inventory_image = "alchemy_base_potion.png^[colorize:#76b5c5:100",
-            on_use = function(itemstack, player, pointed_thing)
-                effect(player,"lunar")
-                    itemstack:take_item()
-                    return itemstack
-
-            end
-        }
-)
-minetest.register_craftitem(
-        "alchemy:speed_potion",
-        {
-            description = "Speed Potion I",
-            inventory_image = "alchemy_base_potion.png^[colorize:#eae583:100",
-            on_use = function(itemstack, player, pointed_thing)
-                effect(player,"speed")
-                    itemstack:take_item()
-                    return itemstack
-            end
-        }
-)
-minetest.register_craftitem(
-        "alchemy:nightvision_potion",
-        {
-            description = "Nightvision I",
-            inventory_image = "alchemy_base_potion.png^[colorize:#00720d:100",
-            on_use = function(itemstack, player, pointed_thing)
-                effect(player,"nightvision")
-                itemstack:take_item()
-                return itemstack
-            end
-        }
-)
+end
+for i in ipairs(potions) do
+    register_potions(potions[i][1],potions[i][2],potions[i][3])
+end
 dofile(path .. 'items.lua')
 dofile(path .. 'mobs.lua')
 dofile(path .. 'earth_monster.lua')
 dofile(path .. 'recipes.lua')
-
 minetest.register_on_leaveplayer(function(player)
     alchemy.players[player:get_player_name()] = nil
 end)
+--
