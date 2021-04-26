@@ -270,7 +270,7 @@ end
                         -- round up coords to fix glitching through doors
                         if closest_name~= nil then
                             player = closest_name
-                            minetest.chat_send_all(player:get_player_name() .. " has been hit with a splash potion of" .. pot .. "!")
+                            minetest.chat_send_player(player:get_player_name(), "You have been hit with a splash potion of" .. pot .. "!")
                             effect(player,effects)
 
                         end

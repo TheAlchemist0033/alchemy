@@ -34,20 +34,21 @@ potions = {
     {"alchemy_base_potion.png^[colorize:#00720d:100","alchemy:nightvision_potion","nightvision"}
 }
 function register_potions( tex, pot, effects)
-strr = string.gsub(pot, "alchemy:", "")
-humanname = string.gsub(strr, "_", " ")
-minetest.register_craftitem(
+    strr = string.gsub(pot, "alchemy:", "")
+    humanname = string.gsub(strr, "_", " ")
+    minetest.register_craftitem(
         pot,
         {
             description = humanname ,
             inventory_image = tex,
             on_use = function(itemstack, player, pointed_thing)
-                throw_potion(itemstack, player)
+                minetest.chat_send_player(player:get_player_name(), "You have been hit with a potion of" .. pot .. "!")
+                effect(player,effects)
                 itemstack:take_item()
                 return itemstack
             end
         }
-)
+    )
 end
 for i in ipairs(potions) do
     register_potions(potions[i][1],potions[i][2],potions[i][3])
@@ -56,7 +57,7 @@ dofile(path .. 'items.lua')
 dofile(path .. 'mobs.lua')
 dofile(path .. 'earth_monster.lua')
 dofile(path .. 'recipes.lua')
-dofile(path .. 'grinder.lua')
+--not ready yet dofile(path .. 'grinder.lua')
 minetest.register_on_leaveplayer(function(player)
     alchemy.players[player:get_player_name()] = nil
 end)
