@@ -56,6 +56,7 @@ dofile(path .. 'items.lua')
 dofile(path .. 'mobs.lua')
 dofile(path .. 'earth_monster.lua')
 dofile(path .. 'recipes.lua')
+dofile(path .. 'grinder.lua')
 minetest.register_on_leaveplayer(function(player)
     alchemy.players[player:get_player_name()] = nil
 end)

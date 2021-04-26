@@ -9,11 +9,12 @@ if eth and buck then
     minetest.register_craft({
         output = "alchemy:base_potion",
         recipe = {
-            {"ethereal:coral4", "ethereal:frost_leaves", "ethereal:coral4"},
-            {"ethereal:crystal_dirt", "alchemy:base_potion", "alchemy:arboreal_tooth"},
-            {"ethereal:coral4", "bucket:bucket_water", "ethereal:coral4"}
+            {"", "", ""},
+            {"", "", ""},
+            {"", "", ""}
         }
-    })    minetest.register_craft({
+    })
+    minetest.register_craft({
     output = "alchemy:base_throw_potion",
     recipe = {
         {"", "alchemy:base_potion", ""},
