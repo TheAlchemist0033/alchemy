@@ -18,6 +18,7 @@ minetest.register_node("alchemy:sol", {
         itemstack:take_item()
         return itemstack
     end,
+
     selection_box = {
         type = "fixed",
         fixed = {-2 / 16, -0.5, -2 / 16, 3 / 16, 5 / 16, 2 / 16},

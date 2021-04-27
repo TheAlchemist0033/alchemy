@@ -58,7 +58,7 @@ end
 for i in ipairs(potions) do
     register_potions(potions[i][1],potions[i][2],potions[i][3])
 end
-
+--
 dofile(path .. 'nodes.lua')
 dofile(path .. 'items.lua')
 dofile(path .. 'mobs.lua')
