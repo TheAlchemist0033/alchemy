@@ -8,7 +8,7 @@ minetest.register_node("alchemy:sol", {
     description = "Sol Grass",
     light_source = 5, -- The node radiates light. Min 0, max 14
     tiles = {"alchemy_sol_flower.png"},
-    groups = {choppy=1},
+    groups = {choppy=1, flower=1, flora=1, attached_node=1, snappy=1},
     waving = 1,
     paramtype = "light",
     walkable = false,
@@ -28,7 +28,7 @@ minetest.register_node("alchemy:lunar", {
     description = "Lunar Grass",
     light_source = 1, -- The node radiates light. Min 0, max 14
     tiles = {"alchemy_lunar_flower.png"},
-    groups = {choppy=1},
+    groups = {choppy=1, flower=1, flora=1, attached_node=1, snappy=1},
     waving = 1,
     paramtype = "light",
     walkable = false,
