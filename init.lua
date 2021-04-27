@@ -11,6 +11,9 @@ minetest.register_globalstep(function(dtime)
             if slowheal[2]==1 then
                 player:set_hp(player:get_hp()+1)
             end
+            if slowheal[2]==-1 then
+                player:set_hp(player:get_hp()-1)
+            end
         end
         time = 0
     end
@@ -23,7 +26,7 @@ minetest.register_on_joinplayer(function(player)
 end)
 
 potions = {
-    {"alchemy_base_potion.png", "alchemy:base_potion", "basepotion"},
+    {"alchemy_base_potion.png", "alchemy:potion", "basepotion"},
     {"alchemy_base_potion.png^[colorize:#0429A5:100", "alchemy:breath_potion", "waterbreathing"},
     {"alchemy_base_potion.png^[colorize:#940000:100", "alchemy:fortitude_potion","fortitude"},
     {"alchemy_base_potion.png^[colorize:#708F9F:100", "alchemy:invisibility_potion","invisibility" },
@@ -31,18 +34,16 @@ potions = {
     {"alchemy_base_potion.png^[colorize:#7FFF00:100", "alchemy:leaping_potion","leap"},
     {"alchemy_base_potion.png^[colorize:#76b5c5:100", "alchemy:lunar_potion","lunar"},
     {"alchemy_base_potion.png^[colorize:#eae583:100", "alchemy:speed_potion","speed"},
-    {"alchemy_base_potion.png^[colorize:#00720d:100","alchemy:nightvision_potion","nightvision"}
+    {"alchemy_base_potion.png^[colorize:#00720d:100","alchemy:nightvision_potion","nightvision"},
+    {"alchemy_base_potion.png^[colorize:#40d869:100","alchemy:poison","poison"}
 }
 function register_potions( tex, pot, effects)
-    strr = string.gsub(pot, "alchemy:", "")
-    humanname = string.gsub(strr, "_", " ")
     minetest.register_craftitem(
         pot,
         {
             description = humanname ,
             inventory_image = tex,
             on_use = function(itemstack, player, pointed_thing)
-                minetest.chat_send_player(player:get_player_name(), "You have been hit with a potion of" .. pot .. "!")
                 effect(player,effects)
                 itemstack:take_item()
                 return itemstack
@@ -53,10 +54,13 @@ end
 for i in ipairs(potions) do
     register_potions(potions[i][1],potions[i][2],potions[i][3])
 end
+
+dofile(path .. 'nodes.lua')
 dofile(path .. 'items.lua')
 dofile(path .. 'mobs.lua')
 dofile(path .. 'earth_monster.lua')
 dofile(path .. 'recipes.lua')
+dofile(path .. 'grasses.lua')
 --not ready yet dofile(path .. 'grinder.lua')
 minetest.register_on_leaveplayer(function(player)
     alchemy.players[player:get_player_name()] = nil

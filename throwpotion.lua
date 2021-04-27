@@ -12,6 +12,7 @@ effect = function (player,effect)
                 }
         )
         player:set_breath(1000)
+        minetest.chat_send_player(player:get_player_name(), "You have used a potion of Waterbreathing I!")
         minetest.after(
                 60,
                 function()
@@ -34,6 +35,7 @@ effect = function (player,effect)
                 }
         )
         player:set_hp(minetest.PLAYER_MAX_HP_DEFAULT * 2)
+        minetest.chat_send_player(player:get_player_name(), "You have used a potion of Fortitude I!")
         minetest.after(
                 60,
                 function()
@@ -62,6 +64,7 @@ effect = function (player,effect)
                     color = {a = 0, r = 255, g = 255, b = 255}
                 }
         )
+        minetest.chat_send_player(player:get_player_name(), "You have used a potion of Invisibility I!")
         minetest.after(
                 60,
                 function()
@@ -88,17 +91,18 @@ effect = function (player,effect)
     end
     if effect == "slowheal" then
         slowheal = {player:get_player_name(),1}
+        minetest.chat_send_player(player:get_player_name(), "You have used a potion of Slow Healing I!")
         minetest.after(
                 60,
                 function()
-                    minetest.chat_send_player(player:get_player_name(), "Effects worn off for Slowhealing I")
+                    minetest.chat_send_player(player:get_player_name(), "Effects worn off for Slow Healing I")
                     slowheal = {player:get_player_name(),0}
                 end
         )
         minetest.after(
                 50,
                 function()
-                    minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of Slowhealing I ")
+                    minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of Slow Healing I ")
                 end
         )
     end
@@ -106,6 +110,7 @@ effect = function (player,effect)
         physics = player:get_physics_override()
         if alchemy.players[player:get_player_name()].jump == 0 then
             alchemy.players[player:get_player_name()].jump = player_monoids.jump:add_change(player, physics.jump*2)
+            minetest.chat_send_player(player:get_player_name(), "You have used a potion of Leaping I!")
             minetest.after(
                     60,
                     function()
@@ -129,6 +134,7 @@ effect = function (player,effect)
         physics = player:get_physics_override()
         if alchemy.players[player:get_player_name()].gravity == 0 then
             alchemy.players[player:get_player_name()].gravity = player_monoids.gravity:add_change(player, physics.gravity/2)
+            minetest.chat_send_player(player:get_player_name(), "You have used a potion of Lunar I!")
             minetest.after(
                     60,
                     function()
@@ -152,6 +158,7 @@ effect = function (player,effect)
         physics = player:get_physics_override()
         if alchemy.players[player:get_player_name()].speed == 0 then
             alchemy.players[player:get_player_name()].speed = player_monoids.speed:add_change(player, physics.speed*2)
+            minetest.chat_send_player(player:get_player_name(), "You have used a potion of Speed I!")
             minetest.after(
                     60,
                     function()
@@ -173,6 +180,7 @@ effect = function (player,effect)
     end
     if effect == "nightvision" then
         player:override_day_night_ratio(1)
+        minetest.chat_send_player(player:get_player_name(), "You have used a potion of Nightvision I!")
         minetest.after(
                 60,
                 function()
@@ -187,7 +195,25 @@ effect = function (player,effect)
                 end
         )
     end
+    if effect == "poison" then
+        slowheal = {player:get_player_name(),-1}
+        minetest.chat_send_player(player:get_player_name(), "You have used a poison!")
+        minetest.after(
+                60,
+                function()
+                    minetest.chat_send_player(player:get_player_name(), "Poison has worn off")
+                    slowheal = {player:get_player_name(),0}
+                end
+        )
+        minetest.after(
+                50,
+                function()
+                    minetest.chat_send_player(player:get_player_name(), "you have 10 seconds left of poisoning.")
+                end
+        )
+    end
 end
+
     ---end effect functions
 
 
@@ -202,7 +228,8 @@ end
         {"alchemy_base_throwpotion.png^[colorize:#7FFF00:100", "alchemy:leaping_potion","leap"},
         {"alchemy_base_throwpotion.png^[colorize:#76b5c5:100", "alchemy:lunar_potion","lunar"},
         {"alchemy_base_throwpotion.png^[colorize:#eae583:100", "alchemy:speed_potion","speed"},
-        {"alchemy_base_throwpotion.png^[colorize:#00720d:100","alchemy:nightvision_potion","nightvision"}
+        {"alchemy_base_throwpotion.png^[colorize:#00720d:100","alchemy:nightvision_potion","nightvision"},
+        {"alchemy_base_potion.png^[colorize:#40d869:100","alchemy:poison","poison"}
     }
     function throwables( tex, pot, effects)
         strr = string.gsub(pot, "alchemy:", "")
@@ -270,7 +297,7 @@ end
                         -- round up coords to fix glitching through doors
                         if closest_name~= nil then
                             player = closest_name
-                            minetest.chat_send_player(player:get_player_name(), "You have been hit with a splash potion of" .. pot .. "!")
+                            minetest.chat_send_player(player:get_player_name(), "You have been hit with an " .. pot .. "!")
                             effect(player,effects)
 
                         end
