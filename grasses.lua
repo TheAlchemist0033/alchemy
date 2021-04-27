@@ -48,7 +48,7 @@ minetest.register_abm({
     nodenames = {"default:dry_dirt_with_grass","default:dry_dirt"},
     neighbor = {"air"},
     interval = 10, -- Run every 10 seconds
-    chance = 5000, -- Select every 1 in 50 nodes
+    chance = 5000, -- Select every 1 in 5000 nodes
     action = function(pos, node, active_object_count, active_object_count_wider)
         local above = {x = pos.x , y = pos.y +1, z = pos.z }
 
