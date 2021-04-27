@@ -34,8 +34,10 @@ potions = {
     {"alchemy_base_potion.png^[colorize:#7FFF00:100", "alchemy:leaping_potion","leap"},
     {"alchemy_base_potion.png^[colorize:#76b5c5:100", "alchemy:lunar_potion","lunar"},
     {"alchemy_base_potion.png^[colorize:#eae583:100", "alchemy:speed_potion","speed"},
+
     {"alchemy_base_potion.png^[colorize:#00720d:100","alchemy:nightvision_potion","nightvision"},
     {"alchemy_base_potion.png^[colorize:#40d869:100","alchemy:poison","poison"}
+
 }
 function register_potions( tex, pot, effects)
     minetest.register_craftitem(
@@ -65,4 +67,3 @@ dofile(path .. 'grasses.lua')
 minetest.register_on_leaveplayer(function(player)
     alchemy.players[player:get_player_name()] = nil
 end)
---
