@@ -40,10 +40,12 @@ potions = {
 
 }
 function register_potions( tex, pot, effects)
+    temp = string.gsub(pot, "alchemy:", "")
+    hrname = string.gsub(temp, "_", " ")
     minetest.register_craftitem(
         pot,
         {
-            description = humanname ,
+            description = hrname ,
             inventory_image = tex,
             on_use = function(itemstack, player, pointed_thing)
                 effect(player,effects)
