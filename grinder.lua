@@ -88,6 +88,7 @@ grinder.put = function(_, listname, _, stack)
     end
 end
 
+
 -- Refresh the "recipe" when a new item is put in the mixer
 grinder.on_put = function(pos, _, _, _)
     local inv = minetest.get_meta(pos):get_inventory()

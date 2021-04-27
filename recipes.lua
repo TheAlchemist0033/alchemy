@@ -6,27 +6,44 @@
 local eth = minetest.get_modpath("ethereal")-- probably not a permanent depend.
 local buck = minetest.get_modpath("bucket")
 if eth and buck then
+
     minetest.register_craft({
-        output = "alchemy:base_potion",
+        output = "alchemy:tube",
+        recipe = {
+            {"", "default:glass", ""},
+            {"", "default:glass", ""},
+            {"", "default:glass",""}
+        }
+    })
+    minetest.register_craft({
+        output = "vessels:glass_bottle",
         recipe = {
             {"", "", ""},
+            {"", "alchemy:tube", ""},
+            {"", "",""}
+        }
+    })
+    minetest.register_craft({
+        output = "alchemy:potion",
+        recipe = {
             {"", "", ""},
+            {"", "vessels:glass_bottle", ""},
             {"", "", ""}
         }
     })
     minetest.register_craft({
     output = "alchemy:base_throw_potion",
     recipe = {
-        {"", "alchemy:base_potion", ""},
-        {"", "alchemy:base_potion", ""},
-        {"", "", ""}
+        {"", "alchemy:glass_bottle", ""},
+        {"", "alchemy:potion", ""},
+        {"", "default:mese_crystal", ""}
     }
 })
     minetest.register_craft({
         output = "alchemy:breath_potion",
         recipe = {
             {"ethereal:coral4", "ethereal:frost_leaves", "ethereal:coral4"},
-            {"ethereal:crystal_dirt", "alchemy:base_potion", "alchemy:arboreal_tooth"},
+            {"ethereal:crystal_dirt", "alchemy:potion", "alchemy:arboreal_tooth"},
             {"ethereal:coral4", "bucket:bucket_water", "ethereal:coral4"}
         }
     })
@@ -34,7 +51,7 @@ if eth and buck then
         output = "alchemy:fortitude_potion",
         recipe = {
             {"ethereal:illumishroom", "alchemy:arboreal_tooth", "ethereal:illumishroom"},
-            {"alchemy:eye_of_earth", "alchemy:base_potion", "alchemy:eye_of_sand"},
+            {"alchemy:eye_of_earth", "alchemy:potion", "alchemy:eye_of_sand"},
             {"ethereal:illumishroom2", "alchemy:fire_essence","ethereal:illumishroom3"}
         }
     })
@@ -42,7 +59,7 @@ if eth and buck then
         output = "alchemy:invisibility_potion",
         recipe = {
             {"default:meselamp", "ethereal:crystal", "default:meselamp"},
-            {"alchemy:arboreal_tooth", "alchemy:base_potion", "alchemy:eye_of_sand"},
+            {"alchemy:arboreal_tooth", "alchemy:potion", "alchemy:eye_of_sand"},
             {"default:meselamp", "ethereal:fire_dust","default:meselamp"}
         }
     })
@@ -50,7 +67,7 @@ if eth and buck then
         output = "alchemy:slow_healing_potion",
         recipe = {
             {"default:mese", "ethereal:coral5", "default:mese"},
-            {"alchemy:arboreal_tooth", "alchemy:base_potion", "alchemy:arboreal_tooth"},
+            {"alchemy:arboreal_tooth", "alchemy:potion", "alchemy:arboreal_tooth"},
             {"ethereal:banana_bread", "ethereal:coral5","ethereal:agar_powder"}
         }
     })
@@ -58,7 +75,7 @@ if eth and buck then
         output = "alchemy:leaping_potion",
         recipe = {
             {"default:mese", "ethereal:coral5", "default:mese"},
-            {"alchemy:arboreal_tooth", "alchemy:base_potion", "alchemy:arboreal_tooth"},
+            {"alchemy:arboreal_tooth", "alchemy:potion", "alchemy:arboreal_tooth"},
             {"ethereal:banana_bread", "ethereal:coral5","ethereal:agar_powder"}
         }
     })
@@ -66,7 +83,7 @@ if eth and buck then
         output = "alchemy:lunar_potion",
         recipe = {
             {"default:mese", "ethereal:coral5", "default:mese"},
-            {"alchemy:arboreal_tooth", "alchemy:base_potion", "alchemy:arboreal_tooth"},
+            {"alchemy:arboreal_tooth", "alchemy:potion", "alchemy:arboreal_tooth"},
             {"ethereal:banana_bread", "ethereal:coral5","ethereal:agar_powder"}
         }
     })
@@ -74,7 +91,7 @@ if eth and buck then
         output = "alchemy:speed_potion",
         recipe = {
             {"default:mese", "ethereal:coral5", "default:mese"},
-            {"alchemy:arboreal_tooth", "alchemy:base_potion", "alchemy:arboreal_tooth"},
+            {"alchemy:arboreal_tooth", "alchemy:potion", "alchemy:arboreal_tooth"},
             {"ethereal:banana_bread", "ethereal:coral5","ethereal:agar_powder"}
         }
     })
@@ -82,8 +99,96 @@ if eth and buck then
         output = "alchemy:nightvision_potion",
         recipe = {
             {"default:mese", "ethereal:coral5", "default:mese"},
-            {"alchemy:arboreal_tooth", "alchemy:base_potion", "alchemy:arboreal_tooth"},
+            {"alchemy:arboreal_tooth", "alchemy:potion", "alchemy:arboreal_tooth"},
             {"ethereal:banana_bread", "ethereal:coral5","ethereal:agar_powder"}
         }
     })
+    minetest.register_craft({
+        output = "alchemy:poison_potion",
+        recipe = {
+            {"default:mese", "", "default:mese"},
+            {"default:mese_crystal", "alchemy:potion", "default:mese_crystal"},
+            {"", "default:mese_crystal",""}
+        }
+    })
+
+    ----------------throw potion----------------
+    minetest.register_craft({
+        output = "alchemy:breath_throwpotion",
+        recipe = {
+            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"default:mese_crystal", "alchemy:breath_potion", "default:mese_crystal"},
+            {"", "default:mese_crystal",""}
+        }
+    })
+    minetest.register_craft({
+        output = "alchemy:fortitude_throwpotion",
+        recipe = {
+            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"default:mese_crystal", "alchemy:fortitude_potion", "default:mese_crystal"},
+            {"", "default:mese_crystal",""}
+        }
+    })
+    minetest.register_craft({
+        output = "alchemy:invisibility_throwpotion",
+        recipe = {
+            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"default:mese_crystal", "alchemy:invisibility_potion", "default:mese_crystal"},
+            {"", "default:mese_crystal",""}
+        }
+    })
+    minetest.register_craft({
+        output = "alchemy:slow_healing_throwpotion",
+        recipe = {
+            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"default:mese_crystal", "alchemy:slow_healing_potion", "default:mese_crystal"},
+            {"", "default:mese_crystal",""}
+        }
+    })
+    minetest.register_craft({
+        output = "alchemy:leaping_throwpotion",
+        recipe = {
+            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"default:mese_crystal", "alchemy:leaping_potion", "default:mese_crystal"},
+            {"", "default:mese_crystal",""}
+        }
+    })
+    minetest.register_craft({
+        output = "alchemy:lunar_throwpotion",
+        recipe = {
+            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"default:mese_crystal", "alchemy:lunar_potion", "default:mese_crystal"},
+            {"", "default:mese_crystal",""}
+        }
+    })
+    minetest.register_craft({
+        output = "alchemy:speed_throwpotion",
+        recipe = {
+            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"default:mese_crystal", "alchemy:speed_potion", "default:mese_crystal"},
+            {"", "default:mese_crystal",""}
+        }
+    })
+    minetest.register_craft({
+        output = "alchemy:nightvision_throwpotion",
+        recipe = {
+            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"default:mese_crystal", "alchemy:nightvision_potion", "default:mese_crystal"},
+            {"", "default:mese_crystal",""}
+        }
+    })
+    minetest.register_craft({
+        output = "alchemy:poison_throwpotion",
+        recipe = {
+            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"default:mese_crystal", "alchemy:poison_potion", "default:mese_crystal"},
+            {"", "default:mese_crystal",""}
+        }
+    })
+
+    minetest.register_craftitem("alchemy:tube", {
+        description = "Empty tube",
+        inventory_image = "alchemy_tube.png",
+    }) --needed for compatability.
+
 end
