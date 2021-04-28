@@ -27,8 +27,8 @@ if eth and buck then
         output = "alchemy:potion",
         recipe = {
             {"", "", ""},
-            {"", "vessels:glass_bottle", ""},
-            {"", "", ""}
+            {"alchemy:hemlock", "vessels:glass_bottle", "alchemy:hemlock"},
+            {"", "bucket:bucket_water", ""}
         }
     })
     minetest.register_craft({
@@ -42,41 +42,41 @@ if eth and buck then
     minetest.register_craft({
         output = "alchemy:breath_potion",
         recipe = {
-            {"ethereal:coral4", "ethereal:frost_leaves", "ethereal:coral4"},
-            {"ethereal:crystal_dirt", "alchemy:potion", "alchemy:arboreal_tooth"},
-            {"ethereal:coral4", "bucket:bucket_water", "ethereal:coral4"}
+            {"", "alchemy:oceanic_powder", ""},
+            {"alchemy:oceanic_powder", "alchemy:potion", "alchemy:oceanic_powder"},
+            {"alchemy:oceanic_powder", "bucket:bucket_water", "alchemy:oceanic_powder"}
         }
     })
     minetest.register_craft({
         output = "alchemy:fortitude_potion",
         recipe = {
-            {"ethereal:illumishroom", "alchemy:arboreal_tooth", "ethereal:illumishroom"},
-            {"alchemy:eye_of_earth", "alchemy:potion", "alchemy:eye_of_sand"},
-            {"ethereal:illumishroom2", "alchemy:fire_essence","ethereal:illumishroom3"}
+            {"alchemy:life_powder", "alchemy:eye_of_earth", "alchemy:life_powder"},
+            {"alchemy:sol", "alchemy:potion", "alchemy:sol"},
+            {"default:mese_crystal", "alchemy:life_powder","default:mese_crystal"}
         }
     })
     minetest.register_craft({
         output = "alchemy:invisibility_potion",
         recipe = {
-            {"default:meselamp", "ethereal:crystal", "default:meselamp"},
-            {"alchemy:arboreal_tooth", "alchemy:potion", "alchemy:eye_of_sand"},
-            {"default:meselamp", "ethereal:fire_dust","default:meselamp"}
+            {"alchemy:fractalized_powder", "alchemy:zap_powder", "alchemy:fractalized_powder"},
+            {"alchemy:eye_of_earth", "alchemy:potion", "alchemy:eye_of_sand"},
+            {"default:mese_crystal", "alchemy:sol_powder","default:mese_crystal"}
         }
     })
     minetest.register_craft({
         output = "alchemy:slow_healing_potion",
         recipe = {
-            {"default:mese", "ethereal:coral5", "default:mese"},
+            {"alchemy:life_powder", "alchemy:life", "alchemy:life_powder"},
             {"alchemy:arboreal_tooth", "alchemy:potion", "alchemy:arboreal_tooth"},
-            {"ethereal:banana_bread", "ethereal:coral5","ethereal:agar_powder"}
+            {"", "default:mese_crystal",""}
         }
     })
     minetest.register_craft({
         output = "alchemy:leaping_potion",
         recipe = {
-            {"default:mese", "ethereal:coral5", "default:mese"},
-            {"alchemy:arboreal_tooth", "alchemy:potion", "alchemy:arboreal_tooth"},
-            {"ethereal:banana_bread", "ethereal:coral5","ethereal:agar_powder"}
+            {"alchemy:zap_powder", "alchemy:lunar_powder", "alchemy:zap_powder"},
+            {"", "alchemy:potion", ""},
+            {"", "default:mese_crystal",""}
         }
     })
     minetest.register_craft({
@@ -98,17 +98,17 @@ if eth and buck then
     minetest.register_craft({
         output = "alchemy:nightvision_potion",
         recipe = {
-            {"default:mese", "ethereal:coral5", "default:mese"},
-            {"alchemy:arboreal_tooth", "alchemy:potion", "alchemy:arboreal_tooth"},
-            {"ethereal:banana_bread", "ethereal:coral5","ethereal:agar_powder"}
+            {"default:mese_lamp", "default:zap_powder", "default:mese_lamp"},
+            {"alchemy:sol_powder", "alchemy:potion", "alchemy:lunar_powder"},
+            {"alchemy:fractalized_powder", "mese_crystal","alchemy:fractalized_powder"}
         }
     })
     minetest.register_craft({
         output = "alchemy:poison_potion",
         recipe = {
-            {"default:mese", "", "default:mese"},
+            {"default:mese", "alchemy:hemlock_powder", "default:mese"},
             {"default:mese_crystal", "alchemy:potion", "default:mese_crystal"},
-            {"", "default:mese_crystal",""}
+            {"alchemy:hemlock_powder", "default:mese_crystal","alchemy:hemlock_powder"}
         }
     })
 
@@ -116,7 +116,7 @@ if eth and buck then
     minetest.register_craft({
         output = "alchemy:breath_throwpotion",
         recipe = {
-            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"", "default:mese_crystal", ""},
             {"default:mese_crystal", "alchemy:breath_potion", "default:mese_crystal"},
             {"", "default:mese_crystal",""}
         }
@@ -124,7 +124,7 @@ if eth and buck then
     minetest.register_craft({
         output = "alchemy:fortitude_throwpotion",
         recipe = {
-            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"", "default:mese_crystal", ""},
             {"default:mese_crystal", "alchemy:fortitude_potion", "default:mese_crystal"},
             {"", "default:mese_crystal",""}
         }
@@ -132,7 +132,7 @@ if eth and buck then
     minetest.register_craft({
         output = "alchemy:invisibility_throwpotion",
         recipe = {
-            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"", "default:mese_crystal", ""},
             {"default:mese_crystal", "alchemy:invisibility_potion", "default:mese_crystal"},
             {"", "default:mese_crystal",""}
         }
@@ -140,7 +140,7 @@ if eth and buck then
     minetest.register_craft({
         output = "alchemy:slow_healing_throwpotion",
         recipe = {
-            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"", "default:mese_crystal", ""},
             {"default:mese_crystal", "alchemy:slow_healing_potion", "default:mese_crystal"},
             {"", "default:mese_crystal",""}
         }
@@ -148,7 +148,7 @@ if eth and buck then
     minetest.register_craft({
         output = "alchemy:leaping_throwpotion",
         recipe = {
-            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"", "default:mese_crystal", ""},
             {"default:mese_crystal", "alchemy:leaping_potion", "default:mese_crystal"},
             {"", "default:mese_crystal",""}
         }
@@ -156,7 +156,7 @@ if eth and buck then
     minetest.register_craft({
         output = "alchemy:lunar_throwpotion",
         recipe = {
-            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"", "default:mese_crystal", ""},
             {"default:mese_crystal", "alchemy:lunar_potion", "default:mese_crystal"},
             {"", "default:mese_crystal",""}
         }
@@ -164,7 +164,7 @@ if eth and buck then
     minetest.register_craft({
         output = "alchemy:speed_throwpotion",
         recipe = {
-            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"", "default:mese_crystal", ""},
             {"default:mese_crystal", "alchemy:speed_potion", "default:mese_crystal"},
             {"", "default:mese_crystal",""}
         }
@@ -172,7 +172,7 @@ if eth and buck then
     minetest.register_craft({
         output = "alchemy:nightvision_throwpotion",
         recipe = {
-            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"", "default:mese_crystal", ""},
             {"default:mese_crystal", "alchemy:nightvision_potion", "default:mese_crystal"},
             {"", "default:mese_crystal",""}
         }
@@ -180,7 +180,7 @@ if eth and buck then
     minetest.register_craft({
         output = "alchemy:poison_throwpotion",
         recipe = {
-            {"default:mese_crystal", "default:mese_crystal", ""},
+            {"", "default:mese_crystal", ""},
             {"default:mese_crystal", "alchemy:poison_potion", "default:mese_crystal"},
             {"", "default:mese_crystal",""}
         }

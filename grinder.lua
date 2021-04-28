@@ -178,7 +178,7 @@ minetest.register_node("alchemy:powder_grinder", {
 minetest.register_craft({
     output = "alchemy:powder_grinder",
     recipe = {
-        {"default:copper_ingot", "default:copper_ingot", "default:copper_ingot"},
+        {"default:copper_ingot", "default:copper_ingotl", "default:copper_ingot"},
         {"default:steel_ingot", "default:diamond", "default:steel_ingot"},
         {"default:cobble", "default:steel_ingot", "default:cobble"}
     }
