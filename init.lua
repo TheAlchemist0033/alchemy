@@ -1,4 +1,4 @@
-local slowheal = slowheal or {}
+slowheal = slowheal or {}
 alchemy = {players = {}}
 local time = 0
 local path = minetest.get_modpath(minetest.get_current_modname()) .. "/"
@@ -8,15 +8,26 @@ minetest.register_globalstep(function(dtime)
     if time >= 3 then
         if slowheal[1]~=nil then
             player = minetest.get_player_by_name(slowheal[1])
+            print(player)
+            print(slowheal[2])
             if slowheal[2]==1 then
                 player:set_hp(player:get_hp()+1)
+                print("+1 hp")
+                time = 0
             end
             if slowheal[2]==-1 then
-                player:set_hp(player:get_hp()-1)
+                    player:set_hp(player:get_hp()-1)
             end
+            time = 0
         end
-        time = 0
     end
+end)
+minetest.register_globalstep(function(dtime)
+    time = time + dtime
+    if time >= 3 then
+
+    end
+
 end)
 minetest.register_on_joinplayer(function(player)
     phys = player:get_physics_override()
