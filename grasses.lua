@@ -15,7 +15,7 @@ minetest.register_node("alchemy:sol", {
     walkable = false,
     on_use = function(itemstack, player, pointed_thing)
         local pos = player:get_pos()
-        minetest.set_node(pos,{name ="fire:basic_flame"})
+        minetest.set_node(pos,{name ="fire:basic_flame"}) 
         itemstack:take_item()
         return itemstack
     end,
