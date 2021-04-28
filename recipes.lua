@@ -5,7 +5,7 @@
 ---
 local eth = minetest.get_modpath("ethereal")-- probably not a permanent depend.
 local buck = minetest.get_modpath("bucket")
-if eth and buck then
+if buck then
 
     minetest.register_craft({
         output = "alchemy:tube",
@@ -82,29 +82,29 @@ if eth and buck then
     minetest.register_craft({
         output = "alchemy:lunar_potion",
         recipe = {
-            {"default:mese", "ethereal:coral5", "default:mese"},
+            {"default:mese", "", "default:mese"},
             {"alchemy:arboreal_tooth", "alchemy:potion", "alchemy:arboreal_tooth"},
-            {"ethereal:banana_bread", "ethereal:coral5","ethereal:agar_powder"}
+            {"alchemy:lunar_powder", "alchemy:lunar_powder","alchemy:lunar_powder"}
         }
     })
     minetest.register_craft({
         output = "alchemy:speed_potion",
         recipe = {
-            {"default:mese", "ethereal:coral5", "default:mese"},
-            {"alchemy:arboreal_tooth", "alchemy:potion", "alchemy:arboreal_tooth"},
-            {"ethereal:banana_bread", "ethereal:coral5","ethereal:agar_powder"}
+            {"default:mese", "alchemy:zap_powder", "default:mese"},
+            {"alchemy:zap_powder", "alchemy:potion", "alchemy:zap_powder"},
+            {"", "alchemy:zap_powder",""}
         }
     })
     minetest.register_craft({
         output = "alchemy:nightvision_potion",
         recipe = {
-            {"default:mese_lamp", "default:zap_powder", "default:mese_lamp"},
+            {"default:meselamp", "alchemy:zap_powder", "default:meselamp"},
             {"alchemy:sol_powder", "alchemy:potion", "alchemy:lunar_powder"},
-            {"alchemy:fractalized_powder", "mese_crystal","alchemy:fractalized_powder"}
+            {"alchemy:fractalized_powder", "default:mese_crystal","alchemy:fractalized_powder"}
         }
     })
     minetest.register_craft({
-        output = "alchemy:poison_potion",
+        output = "alchemy:poison",
         recipe = {
             {"default:mese", "alchemy:hemlock_powder", "default:mese"},
             {"default:mese_crystal", "alchemy:potion", "default:mese_crystal"},
@@ -181,7 +181,7 @@ if eth and buck then
         output = "alchemy:poison_throwpotion",
         recipe = {
             {"", "default:mese_crystal", ""},
-            {"default:mese_crystal", "alchemy:poison_potion", "default:mese_crystal"},
+            {"default:mese_crystal", "alchemy:poison", "default:mese_crystal"},
             {"", "default:mese_crystal",""}
         }
     })
