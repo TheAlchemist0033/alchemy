@@ -231,7 +231,7 @@ end
         {"alchemy_base_throwpotion.png^[colorize:#76b5c5:100", "alchemy:lunar_potion","lunar"},
         {"alchemy_base_throwpotion.png^[colorize:#eae583:100", "alchemy:speed_potion","speed"},
         {"alchemy_base_throwpotion.png^[colorize:#00720d:100","alchemy:nightvision_potion","nightvision"},
-        {"alchemy_base_potion.png^[colorize:#40d869:100","alchemy:poison","poison"}
+        {"alchemy_base_throwpotion.png^[colorize:#40d869:100","alchemy:poison","poison"}
     }
     function throwables( tex, pot, effects)
         strr = string.gsub(pot, "alchemy:", "")
