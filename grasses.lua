@@ -5,10 +5,11 @@
 ---
 minetest.register_node("alchemy:sol", {
     drawtype = "plantlike",
-    description = "Sol Grass",
+    description = "Sol Flower",
     light_source = 5, -- The node radiates light. Min 0, max 14
     tiles = {"alchemy_sol_flower.png"},
-    groups = {choppy=1, flower=1, flora=1, attached_node=1, snappy=1},
+    groups = {flower=1, flora=1, attached_node=1, snappy=1},
+
     waving = 1,
     paramtype = "light",
     walkable = false,
@@ -18,6 +19,7 @@ minetest.register_node("alchemy:sol", {
         itemstack:take_item()
         return itemstack
     end,
+
     selection_box = {
         type = "fixed",
         fixed = {-2 / 16, -0.5, -2 / 16, 3 / 16, 5 / 16, 2 / 16},
@@ -25,10 +27,11 @@ minetest.register_node("alchemy:sol", {
 })
 minetest.register_node("alchemy:lunar", {
     drawtype = "plantlike",
-    description = "Lunar Grass",
-    light_source = 1, -- The node radiates light. Min 0, max 14
+    description = "Lunar Flower",
+    light_source = 1,
     tiles = {"alchemy_lunar_flower.png"},
-    groups = {choppy=1, flower=1, flora=1, attached_node=1, snappy=1},
+    groups = {flower=1, flora=1, attached_node=1, snappy=1},
+
     waving = 1,
     paramtype = "light",
     walkable = false,
@@ -43,12 +46,91 @@ minetest.register_node("alchemy:lunar", {
         fixed = {-2 / 16, -0.5, -2 / 16, 3 / 16, 5 / 16, 2 / 16},
     },
 })
+minetest.register_node("alchemy:fractalized", {
+    drawtype = "plantlike",
+    description = "Fractalized Flower",
+    tiles = {"alchemy_fracturing_flower.png"},
+    groups = {flower=1, flora=1, attached_node=1, snappy=1},
+    waving = 1,
+    paramtype = "light",
+    walkable = false,
+    selection_box = {
+        type = "fixed",
+        fixed = {-2 / 16, -0.5, -2 / 16, 3 / 16, 5 / 16, 2 / 16},
+    },
+})
+minetest.register_node("alchemy:zap", {
+    drawtype = "plantlike",
+    description = "Zap Flower",
+    light_source = 3,
+    tiles = {"alchemy_zap_flower.png"},
+    groups = {flower=1, flora=1, attached_node=1, snappy=1},
+    waving = 1,
+    paramtype = "light",
+    walkable = false,
+    selection_box = {
+        type = "fixed",
+        fixed = {-2 / 16, -0.5, -2 / 16, 3 / 16, 5 / 16, 2 / 16},
+    }
+})
+minetest.register_node("alchemy:life", {
+    drawtype = "plantlike",
+    description = "Flower of Life",
+    tiles = {"alchemy_life_flower.png"},
+    groups = {flower=1, flora=1, attached_node=1, snappy=1},
+    waving = 1,
+    paramtype = "light",
+    walkable = false,
+    selection_box = {
+        type = "fixed",
+        fixed = {-2 / 16, -0.5, -2 / 16, 3 / 16, 5 / 16, 2 / 16},
+    },
+    on_use = function(itemstack, player, pointed_thing)
+        if player:get_hp() < 20 then
+            player:set_hp(player:get_hp()+1)
+            itemstack:take_item()
+            return itemstack
 
+        end
+    end,
+})
+minetest.register_node("alchemy:hemlock", {
+    drawtype = "plantlike",
+    description = "Hemlock Flower",
+    tiles = {"alchemy_hemlock.png"},
+    groups = {flower=1, flora=1, attached_node=1, snappy=1},
+    waving = 1,
+    paramtype = "light",
+    walkable = false,
+    selection_box = {
+        type = "fixed",
+        fixed = {-2 / 16, -0.5, -2 / 16, 3 / 16, 5 / 16, 2 / 16},
+    },
+    on_use = function(itemstack, player, pointed_thing)
+        player:set_hp(player:get_hp()-4)
+        itemstack:take_item()
+        return itemstack
+    end
+})
+minetest.register_node("alchemy:oceanic_flower", {
+    drawtype = "plantlike",
+    description = "Oceanic Flower",
+    tiles = {"alchemy_oceanic_flower.png"},
+    light_source = 1,
+    groups = {flower=1, flora=1, attached_node=1, snappy=1},
+    waving = 1,
+    paramtype = "light",
+    walkable = false,
+    selection_box = {
+        type = "fixed",
+        fixed = {-2 / 16, -0.5, -2 / 16, 3 / 16, 5 / 16, 2 / 16},
+    },
+})
 minetest.register_abm({
     nodenames = {"default:dry_dirt_with_grass","default:dry_dirt"},
     neighbor = {"air"},
     interval = 10, -- Run every 10 seconds
-    chance = 5000, -- Select every 1 in 50 nodes
+    chance = 5000, -- Select every 1 in 5000 nodes
     action = function(pos, node, active_object_count, active_object_count_wider)
         local above = {x = pos.x , y = pos.y +1, z = pos.z }
 
@@ -113,3 +195,22 @@ minetest.register_abm({
     end
 
 })
+minetest.register_abm({
+    nodenames = {"default:dirt_with_grass"},
+    neighbor = {"air"},
+    interval = 10, -- Run every 10 seconds
+    chance = 100, -- Select every 1 in 5000 nodes
+    action = function(pos, node, active_object_count, active_object_count_wider)
+        if (minetest.get_node_light({x = pos.x, y = pos.y + 1, z = pos.z}) or 0) >= 13 then
+            local thisstuff = {"alchemy:hemlock","alchemy:hemlock","alchemy:hemlock","alchemy:hemlock",
+                               "alchemy:fractalized","alchemy:zap","alchemy:life"}
+            if not minetest.find_node_near(pos, 2, thisstuff) then
+                math.randomseed(os.clock())
+                r = math.random(1,7)
+                minetest.set_node({x = pos.x, y = pos.y + 1, z = pos.z}, {name = thisstuff[r]})
+            end
+        end
+
+    end
+})
+

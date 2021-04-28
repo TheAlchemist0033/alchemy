@@ -43,22 +43,22 @@ function register_potions( tex, pot, effects)
     temp = string.gsub(pot, "alchemy:", "")
     hrname = string.gsub(temp, "_", " ")
     minetest.register_craftitem(
-        pot,
-        {
-            description = hrname ,
-            inventory_image = tex,
-            on_use = function(itemstack, player, pointed_thing)
-                effect(player,effects)
-                itemstack:take_item()
-                return itemstack
-            end
-        }
+            pot,
+            {
+                description = hrname ,
+                inventory_image = tex,
+                on_use = function(itemstack, player, pointed_thing)
+                    effect(player,effects)
+                    itemstack:take_item()
+                    return itemstack
+                end
+            }
     )
 end
 for i in ipairs(potions) do
     register_potions(potions[i][1],potions[i][2],potions[i][3])
 end
-
+--
 dofile(path .. 'nodes.lua')
 dofile(path .. 'items.lua')
 dofile(path .. 'mobs.lua')
