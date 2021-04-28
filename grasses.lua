@@ -199,14 +199,16 @@ minetest.register_abm({
     interval = 10, -- Run every 10 seconds
     chance = 100, -- Select every 1 in 5000 nodes
     action = function(pos, node, active_object_count, active_object_count_wider)
-        local above = {x = pos.x , y = pos.y +1, z = pos.z }
-        local thisstuff = {"alchemy:hemlock","alchemy:hemlock","alchemy:hemlock","alchemy:hemlock",
-                           "alchemy:fractalized","alchemy:zap","alchemy:life"}
-        if not minetest.find_node_near(pos, 2, thisstuff) then
-            math.randomseed(os.clock())
-            r = math.random(1,7)
-            minetest.set_node(above, {name = thisstuff[r]})
+        if (minetest.get_node_light({x = pos.x, y = pos.y + 1, z = pos.z}) or 0) >= 13 then
+            local thisstuff = {"alchemy:hemlock","alchemy:hemlock","alchemy:hemlock","alchemy:hemlock",
+                               "alchemy:fractalized","alchemy:zap","alchemy:life"}
+            if not minetest.find_node_near(pos, 2, thisstuff) then
+                math.randomseed(os.clock())
+                r = math.random(1,7)
+                minetest.set_node({x = pos.x, y = pos.y + 1, z = pos.z}, {name = thisstuff[r]})
+            end
         end
+
     end
 })
 
