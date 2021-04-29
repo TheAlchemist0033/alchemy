@@ -8,10 +8,8 @@ minetest.register_globalstep(function(dtime)
     if time >= 3 then
         if slowheal[1]~=nil then
             player = minetest.get_player_by_name(slowheal[1])
-
             if slowheal[2]==1 then
                 player:set_hp(player:get_hp()+1)
-                print("+1 hp")
                 time = 0
             end
             if slowheal[2]==-1 then
