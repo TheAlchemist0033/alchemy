@@ -75,7 +75,9 @@ dofile(path .. 'earth_monster.lua')
 dofile(path .. 'recipes.lua')
 dofile(path .. 'grasses.lua')
 dofile(path .. 'grinder.lua')
---i really... really... hate formspec... dofile(path .. 'mixer.lua')
+--i really... really... hate formspec...
+dofile(path .. 'mixer.lua')
+--now i hate it even more.
 minetest.register_on_leaveplayer(function(player)
     alchemy.players[player:get_player_name()] = nil
 end)
