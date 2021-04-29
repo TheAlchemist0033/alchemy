@@ -8,11 +8,8 @@ minetest.register_globalstep(function(dtime)
     if time >= 3 then
         if slowheal[1]~=nil then
             player = minetest.get_player_by_name(slowheal[1])
-            print(player)
-            print(slowheal[2])
             if slowheal[2]==1 then
                 player:set_hp(player:get_hp()+1)
-                print("+1 hp")
                 time = 0
             end
             if slowheal[2]==-1 then
@@ -71,12 +68,16 @@ for i in ipairs(potions) do
 end
 --
 dofile(path .. 'nodes.lua')
+dofile(path .. 'powders.lua')
 dofile(path .. 'items.lua')
 dofile(path .. 'mobs.lua')
 dofile(path .. 'earth_monster.lua')
 dofile(path .. 'recipes.lua')
 dofile(path .. 'grasses.lua')
---not ready yet dofile(path .. 'grinder.lua')
+dofile(path .. 'grinder.lua')
+--i really... really... hate formspec...
+dofile(path .. 'mixer.lua')
+--now i hate it even more.
 minetest.register_on_leaveplayer(function(player)
     alchemy.players[player:get_player_name()] = nil
 end)

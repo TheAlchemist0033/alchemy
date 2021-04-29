@@ -3,7 +3,6 @@ Originally made by F. Georget, redone by TheAlchemist0033
 This work is free. You can redistribute it and/or modify it under the
 terms of the Do What The Fuck You Want To Public License, Version 2,
 as published by Sam Hocevar. See the COPYING file for more details.
---]]
 
 
 -- the namespace that contains the useful functions and data
@@ -31,9 +30,8 @@ mixer.formspec = [[
 	list[context;output;3,4;2,1]
 
 	list[current_player;main;0,5.25;8,4;]
-	]]
-
--- This is a first filter to know if something can be crafted or not
+	]
+--This is a first filter to know if something can be crafted or not
 mixer.filter_recipe = function(pos)
     local inv = minetest.get_meta(pos):get_inventory()
 
@@ -51,9 +49,9 @@ mixer.filter_recipe = function(pos)
 end
 
 mixer.recipes = {
-    {"", "", "alchemy:base_potion"},
-    {"", "", "alchemy:breath_potion"},
-    {"", "", "alchemy:poison"},
+    {"", "", ""},
+    {"", "", ""},
+    {"", "", ""},
 
 }
 
@@ -234,9 +232,9 @@ mixer.on_take = function(pos, listname, index, stack)
         mixer.on_put(pos, listname, index, stack)
     end
 end
-
+--]]
 minetest.register_node("alchemy:potion_mixer", {
-    description = "Potion mixer",
+    description = "A nice uh... Decorative block (see src)",
     drawtype="normal",
     tiles = {
         "alchemy_mixer_top.png",
@@ -249,14 +247,14 @@ minetest.register_node("alchemy:potion_mixer", {
     },
     is_ground_content = true,
     groups = {cracky=3, oddly_breakable_by_hand=1},
-    inventory=true,
-    on_construct                  = mixer.on_construct,
-    allow_metadata_inventory_put  = mixer.put,
-    on_metadata_inventory_put     = mixer.on_put,
-    on_metadata_inventory_move    = mixer.on_put,
-    allow_metadata_inventory_take = mixer.take,
-    on_metadata_inventory_take    = mixer.on_take,
-    on_receive_fields             = mixer.on_mix
+  --  inventory=true,
+  --  on_construct                    = mixer.on_construct,
+  --  allow_metadata_inventory_put  = mixer.put,
+  --  on_metadata_inventory_put     = mixer.on_put,
+  --  on_metadata_inventory_move    = mixer.on_put,
+  --  allow_metadata_inventory_take = mixer.take,
+  --  on_metadata_inventory_take    = mixer.on_take,
+--    on_receive_fields             = mixer.on_mix
 })
 
 minetest.register_craft({
@@ -267,3 +265,6 @@ minetest.register_craft({
         {"default:cobble", "default:cobble", "default:cobble"}
     }
 })
+--this whole friggin file needs to be redone. I dont have the patience, you dont have the need.
+--but without it the mod isnt totally compatable with the old version of alchemy. So what do i do?
+--well, enjoy the wonderful new ~~temporary~~ decoration.

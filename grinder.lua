@@ -42,12 +42,13 @@ end
 
 
 grinder.recipes = {
-    {"flowers:rose", "alchemy:powder_red"},
-    {"flowers:dandelion_white", "alchemy:powder_white"},
-    {"flowers:geranium", "alchemy:powder_blue"},
-    {"flowers:mushroom_red", "alchemy:powder_firebrick"},
-    {"default:grass_1", "alchemy:powder_green"}
-
+    {"alchemy:zap", "alchemy:zap_powder"},
+    {"alchemy:sol", "alchemy:sol_powder"},
+    {"alchemy:lunar", "alchemy:lunar_powder"},
+    {"alchemy:hemlock", "alchemy:hemlock_powder"},
+    {"alchemy:fractalized", "alchemy:fractalized_powder"},
+    {"alchemy:life","alchemy:life_powder"},
+    {"alchemy:oceanic_flower", "alchemy:oceanic_powder"},
 }
 
 -- Declares the recipes available
@@ -177,8 +178,8 @@ minetest.register_node("alchemy:powder_grinder", {
 minetest.register_craft({
     output = "alchemy:powder_grinder",
     recipe = {
-        {"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
+        {"default:copper_ingot", "default:copper_ingot", "default:copper_ingot"},
         {"default:steel_ingot", "default:diamond", "default:steel_ingot"},
-        {"default:cobble", "default:cobble", "default:cobble"}
+        {"default:cobble", "default:steel_ingot", "default:cobble"}
     }
 })
