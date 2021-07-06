@@ -71,10 +71,11 @@ minetest.register_node("alchemy:zap", {
         fixed = {-2 / 16, -0.5, -2 / 16, 3 / 16, 5 / 16, 2 / 16},
     },
     on_use = function(itemstack,player)
-        used = 0
+        local used = 0
+        local f1, f2, f3, f4, fr = player:get_local_animation(player)
+           
         if used == 0 then
-            local f1, f2, f3, f4, fr = player:get_local_animation(player)
-            player:set_local_animation(f1,f2,f3,f4,fr*2)
+             player:set_local_animation(f1,f2,f3,f4,fr*2)
             used = 1
         end
         itemstack:take_item()
@@ -207,6 +208,9 @@ minetest.register_abm({
     end
 
 })
+local thisstuff = {"alchemy:hemlock","alchemy:hemlock","alchemy:hemlock","alchemy:hemlock",
+"alchemy:fractalized","alchemy:zap","alchemy:life"}
+
 minetest.register_abm({
     nodenames = {"default:dirt_with_grass"},
     neighbor = {"air"},
@@ -214,9 +218,7 @@ minetest.register_abm({
     chance = 100,
     action = function(pos, node, active_object_count, active_object_count_wider)
         if (minetest.get_node_light({x = pos.x, y = pos.y + 1, z = pos.z}) or 0) >= 13 then
-            local thisstuff = {"alchemy:hemlock","alchemy:hemlock","alchemy:hemlock","alchemy:hemlock",
-                               "alchemy:fractalized","alchemy:zap","alchemy:life"}
-            if not minetest.find_node_near(pos, 15, thisstuff) then
+             if not minetest.find_node_near(pos, 15, thisstuff) then
                 math.randomseed(os.clock())
                 local r = math.random(1,7)
                 minetest.set_node({x = pos.x, y = pos.y + 1, z = pos.z}, {name = thisstuff[r]})
